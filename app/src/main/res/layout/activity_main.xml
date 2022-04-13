@@ -102,7 +102,7 @@
     <Button
         android:id="@+id/goRegister"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="103dp"
+        android:layout_width="93dp"
         android:layout_height="45dp"
         android:backgroundTint="@color/leaf_green"
         android:fontFamily="@font/poppinsregular"
