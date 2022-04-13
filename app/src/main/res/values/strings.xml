@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DadidoApp</string>
+    <string name="judul_gambar_card">image_title</string>
+    <string name="token_id_card">Token_id</string>
+    <string name="price_card">Price</string>
+    <string name="total_price_card">0.0</string>
+    <string name="total_like_card">0</string>
+    <string name="login_textview_to_register">"Doesn't have account? click below"</string>
+    <string name="register_textview">Register</string>
+    <string name="register_textview_to_login">"already have account? click below"</string>
+    <string name="button_text_to_login">Login</string>
+</resources>
