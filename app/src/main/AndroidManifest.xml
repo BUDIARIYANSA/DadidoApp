@@ -14,16 +14,20 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.example.dadidoapp.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.example.dadidoapp.MainActivity"
+            android:name=".SplashScreen"
+            android:label="Dadido"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
         </activity>
     </application>
 
