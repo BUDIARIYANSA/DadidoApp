@@ -1,7 +1,10 @@
 package com.example.dadidoapp;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +31,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActivityResultLauncher<Intent> intentLaunch = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        usernameField.getEditText().setText(result.getData().getStringExtra("username"));
+                        passwordField.getEditText().setText(result.getData().getStringExtra("password"));
+                    }
+                }
+        );
+
         passwordField = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
         usernameField = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         btnLogin = (Button) findViewById(R.id.buttonLogin);
@@ -43,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         goRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                intentLaunch.launch(intent);
             }
         });
     }
