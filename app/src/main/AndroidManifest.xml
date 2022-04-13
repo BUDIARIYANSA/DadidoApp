@@ -14,32 +14,26 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
-<<<<<<< HEAD
             android:name=".new_page_activity"
             android:exported="true" >
-=======
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity
             android:name=".SplashScreen"
             android:label="Dadido"
-            android:exported="true">
->>>>>>> eead06e8f3bf1192efccb5fe67d5850ecc68019d
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
+
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-<<<<<<< HEAD
-            android:exported="false"/>
-
-
-=======
-            android:exported="true">
+            android:exported="false">
         </activity>
->>>>>>> eead06e8f3bf1192efccb5fe67d5850ecc68019d
     </application>
 
 </manifest>
