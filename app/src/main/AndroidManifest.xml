@@ -14,7 +14,7 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Trending_page_Activity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,18 +23,23 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Trending_page_Activity"
+            android:exported="false">
+
+        </activity>
+        <activity
             android:name=".new_page_activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".SplashScreen"
             android:exported="false"
-            android:label="Dadido"></activity>
+            android:label="Dadido" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
