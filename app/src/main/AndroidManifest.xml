@@ -14,6 +14,9 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MostExpensive"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
@@ -24,9 +27,7 @@
         </activity>
         <activity
             android:name=".Trending_page_Activity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".new_page_activity"
             android:exported="false" />

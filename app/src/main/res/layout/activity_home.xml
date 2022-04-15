@@ -7,6 +7,7 @@
     tools:context=".HomeActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,35 +32,61 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_capsule_shape"
+                    android:fontFamily="@font/poppinsregular"
+                    android:padding="15dp"
                     android:text="Most Expensive"
-                    android:textColor="@color/dark_green"
-                    android:padding="15dp"/>
+                    android:textColor="@color/dark_green" />
 
                 <android.widget.Button
-                    android:id="@+id/buttonNew"
+                    android:id="@+id/button_New"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_capsule_shape"
+                    android:fontFamily="@font/poppinsregular"
+                    android:padding="15dp"
                     android:text="New"
-                    android:textColor="@color/dark_green"
-                    android:padding="15dp"/>
+                    android:textColor="@color/dark_green" />
 
                 <android.widget.Button
-                    android:id="@+id/buttonTrending"
+                    android:id="@+id/button_Trending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_capsule_shape"
+                    android:fontFamily="@font/poppinsregular"
+                    android:padding="15dp"
                     android:text="Trending"
-                    android:textColor="@color/dark_green"
-                    android:padding="15dp"/>
+                    android:textColor="@color/dark_green" />
+
+                <android.widget.Button
+                    android:id="@+id/button_Test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_capsule_shape"
+                    android:fontFamily="@font/poppinsregular"
+                    android:padding="15dp"
+                    android:text="Test"
+                    android:textColor="@color/dark_green" />
 
             </LinearLayout>
 
         </HorizontalScrollView>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/DisplayFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
