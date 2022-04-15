@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".FavoritActivity"
             android:exported="false" />
@@ -40,6 +41,19 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
+=======
+            android:name=".Trending_page_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".new_page_activity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="false"
+            android:label="Dadido" />
+        <activity
+>>>>>>> 6c4e0bb8ea29faeb69334291268925e9ef0bdfd6
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

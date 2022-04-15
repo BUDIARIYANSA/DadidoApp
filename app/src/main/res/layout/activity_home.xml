@@ -61,18 +61,6 @@
                     android:text="Trending"
                     android:textColor="@color/dark_green" />
 
-                <android.widget.Button
-                    android:id="@+id/button_Test"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/button_capsule_shape"
-                    android:fontFamily="@font/poppinsregular"
-                    android:padding="15dp"
-                    android:text="Test"
-                    android:textColor="@color/dark_green" />
-
             </LinearLayout>
 
         </HorizontalScrollView>

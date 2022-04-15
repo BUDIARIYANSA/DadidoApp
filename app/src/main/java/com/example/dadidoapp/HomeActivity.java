@@ -33,10 +33,16 @@ public class HomeActivity extends AppCompatActivity {
         trending_btn = (Button)findViewById(R.id.button_Trending);
         mCollection = (FloatingActionButton) findViewById(R.id.mCollection);
 
+        androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.DisplayFragment, new MostExpensive());
+        ft.commit();
+
         mostExpensive_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.DisplayFragment, new MostExpensive());
+                ft.commit();
             }
         });
 
