@@ -2,6 +2,7 @@ package com.example.dadidoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -29,9 +30,9 @@ public class DetailItemActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
 
         adapter = new cardItem_adapter(Card_Item_ArrayList);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
     }
