@@ -89,4 +89,47 @@
 
     </FrameLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomappbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:contentInsetStart="0dp"
+                app:fabCradleMargin="10dp"
+                app:fabCradleRoundedCornerRadius="10dp">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNav"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/tea_green"
+                    app:itemIconTint="@color/leaf_green"
+                    app:itemTextColor="@color/leaf_green"
+                    app:menu="@menu/menu" />
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/mCollection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4E9F3D"
+                app:tint="@android:color/white"
+                android:src="@drawable/ic_baseline_grid_on_24"
+                app:fabCustomSize="80dp"
+                app:maxImageSize="60dp"
+                app:layout_anchor="@id/bottomappbar"
+                />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

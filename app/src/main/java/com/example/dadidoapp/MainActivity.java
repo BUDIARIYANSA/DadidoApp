@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     String res = response.body().toString();
                     Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }
