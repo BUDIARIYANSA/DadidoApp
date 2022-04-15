@@ -70,6 +70,7 @@
         android:id="@+id/DisplayFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,12 +111,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#4E9F3D"
-                app:tint="@android:color/white"
                 android:src="@drawable/ic_baseline_grid_on_24"
-                app:fabCustomSize="80dp"
-                app:maxImageSize="60dp"
+                app:fabCustomSize="70dp"
                 app:layout_anchor="@id/bottomappbar"
-                />
+                app:maxImageSize="50dp"
+                app:tint="@android:color/white" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </RelativeLayout>
 

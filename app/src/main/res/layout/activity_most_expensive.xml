@@ -21,7 +21,7 @@
     <RelativeLayout
         android:id="@+id/activity_Expensive"
         android:layout_width="0dp"
-        android:layout_height="320dp"
+        android:layout_height="300dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMostExpensive"
         tools:context=".MainActivity">
