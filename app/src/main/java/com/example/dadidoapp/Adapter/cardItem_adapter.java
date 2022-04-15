@@ -1,13 +1,16 @@
 package com.example.dadidoapp.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.R;
 
@@ -44,6 +47,7 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
 
     public class cardItemViewHolder extends RecyclerView.ViewHolder{
         private TextView txtJudulGambar, txtTokenId, txtTotalPrice, txtTotallike;
+        private CardView card;
 
         public cardItemViewHolder(View itemView) {
             super(itemView);
@@ -51,6 +55,15 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
             txtTokenId = (TextView) itemView.findViewById(R.id.textView_token_id);
             txtTotalPrice = (TextView) itemView.findViewById(R.id.textView_total_price);
             txtTotallike = (TextView) itemView.findViewById(R.id.textView_total_like);
+
+            card = (CardView) itemView.findViewById(R.id.card_model_one);
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    card.getContext().startActivity(new Intent(card.getContext(), DetailItemActivity.class));
+                }
+            });
         }
     }
 }

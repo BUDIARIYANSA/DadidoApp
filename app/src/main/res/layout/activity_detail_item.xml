@@ -305,7 +305,7 @@
 
             <RelativeLayout
                 android:id="@+id/layout_detail"
-                android:layout_width="437dp"
+                android:layout_width="0dp"
                 android:layout_height="322dp"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -318,13 +318,15 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view4"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="320dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_marginBottom="6dp" />
 
             </RelativeLayout>
