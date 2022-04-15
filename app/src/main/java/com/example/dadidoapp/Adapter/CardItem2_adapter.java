@@ -1,13 +1,16 @@
 package com.example.dadidoapp.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 import com.example.dadidoapp.R;
@@ -44,6 +47,7 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
 
     public class cardItemViewHolder extends RecyclerView.ViewHolder{
         private TextView txtjudul_item, txtTop_number, txtcreator_name, txtitem_price;
+        private CardView card;
 
         public cardItemViewHolder(View itemView) {
             super(itemView);
@@ -51,6 +55,15 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
             txtTop_number = (TextView) itemView.findViewById(R.id.textTop);
             txtcreator_name = (TextView) itemView.findViewById(R.id.created_by);
             txtitem_price = (TextView) itemView.findViewById(R.id.price2);
+
+            card = (CardView) itemView.findViewById(R.id.card_model_two);
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    card.getContext().startActivity(new Intent(card.getContext(), DetailItemActivity.class));
+                }
+            });
         }
     }
 }

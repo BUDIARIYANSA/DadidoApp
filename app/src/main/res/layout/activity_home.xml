@@ -112,9 +112,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#4E9F3D"
                 android:src="@drawable/ic_baseline_grid_on_24"
-                app:fabCustomSize="70dp"
+                app:fabCustomSize="60dp"
                 app:layout_anchor="@id/bottomappbar"
-                app:maxImageSize="50dp"
+                app:maxImageSize="30dp"
                 app:tint="@android:color/white" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </RelativeLayout>
