@@ -112,8 +112,8 @@
                 android:backgroundTint="#4E9F3D"
                 app:tint="@android:color/white"
                 android:src="@drawable/ic_baseline_grid_on_24"
-                app:fabCustomSize="80dp"
-                app:maxImageSize="60dp"
+                app:fabCustomSize="70dp"
+                app:maxImageSize="50dp"
                 app:layout_anchor="@id/bottomappbar"
                 />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
