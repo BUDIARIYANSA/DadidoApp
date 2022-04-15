@@ -1,36 +1,43 @@
 package com.example.dadidoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 
 import java.util.ArrayList;
 
-public class new_page_activity extends AppCompatActivity {
+public class new_page_activity extends Fragment {
 
     private RecyclerView recyclerView;
     private cardItem_adapter adapter;
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_page);
-
+        return inflater.inflate(R.layout.activity_new_page, parent, false);
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         addData();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         adapter = new cardItem_adapter(Card_Item_ArrayList);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(new_page_activity.this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(new_page_activity.this, 2, GridLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
