@@ -80,9 +80,13 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 if(response.isSuccessful()) {
                     String res = response.body().toString();
-                    Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                    finish();
+                    if(res.equals("success")) {
+                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }

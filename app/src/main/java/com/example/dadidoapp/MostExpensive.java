@@ -65,14 +65,14 @@ public class MostExpensive extends Fragment {
     void addData2(){
         card_creator_ArrayList = new ArrayList<>();
         card_creator_ArrayList.add(new Card_Creator_model("Collection satu", "Creator satu", "60",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien. Vestibulum aliquet, leo in blandit lobortis, odio turpis rutrum nunc, id consectetur nibh purus ut quam. Nunc diam justo,"));
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien."));
         card_creator_ArrayList.add(new Card_Creator_model("Collection dua", "Creator dua", "50",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien. Vestibulum aliquet, leo in blandit lobortis, odio turpis rutrum nunc, id consectetur nibh purus ut quam. Nunc diam justo,"));
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien."));
         card_creator_ArrayList.add(new Card_Creator_model("Collection tiga", "Creator tiga", "8",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien. Vestibulum aliquet, leo in blandit lobortis, odio turpis rutrum nunc, id consectetur nibh purus ut quam. Nunc diam justo,"));
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien."));
         card_creator_ArrayList.add(new Card_Creator_model("Collection empat", "Creator empat", "700",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien. Vestibulum aliquet, leo in blandit lobortis, odio turpis rutrum nunc, id consectetur nibh purus ut quam. Nunc diam justo,"));
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien."));
         card_creator_ArrayList.add(new Card_Creator_model("Collection lima", "Creator lima", "56",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien. Vestibulum aliquet, leo in blandit lobortis, odio turpis rutrum nunc, id consectetur nibh purus ut quam. Nunc diam justo,"));
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non dignissim sem. Quisque in ultrices sapien."));
     }
 }
