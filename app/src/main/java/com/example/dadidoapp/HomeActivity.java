@@ -23,10 +23,16 @@ public class HomeActivity extends AppCompatActivity {
         new_btn = (Button)findViewById(R.id.button_New);
         trending_btn = (Button)findViewById(R.id.button_Trending);
 
+        androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.DisplayFragment, new MostExpensive());
+        ft.commit();
+
         mostExpensive_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.DisplayFragment, new MostExpensive());
+                ft.commit();
             }
         });
 
