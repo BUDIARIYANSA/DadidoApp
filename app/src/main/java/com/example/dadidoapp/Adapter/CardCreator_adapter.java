@@ -1,6 +1,7 @@
 package com.example.dadidoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dadidoapp.DetailCollectionActivity;
+import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Creator_model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
@@ -75,7 +78,7 @@ public class CardCreator_adapter extends RecyclerView.Adapter<CardCreator_adapte
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    card.getContext().startActivity(new Intent(card.getContext(), DetailCollectionActivity.class));
                 }
             });
         }
