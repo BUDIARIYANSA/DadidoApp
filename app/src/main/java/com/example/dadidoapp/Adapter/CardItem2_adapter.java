@@ -1,9 +1,11 @@
 package com.example.dadidoapp.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,14 +16,17 @@ import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 import com.example.dadidoapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.cardItemViewHolder>{
     private ArrayList<Card_Item_Model2> dataList2;
+    private Context context;
 
-    public CardItem2_adapter(ArrayList<Card_Item_Model2> dataList) {
+    public CardItem2_adapter(ArrayList<Card_Item_Model2> dataList, Context context) {
         this.dataList2 = dataList;
+        this.context = context;
     }
 
     @NonNull
@@ -34,10 +39,14 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
 
     @Override
     public void onBindViewHolder(@NonNull CardItem2_adapter.cardItemViewHolder holder, int position) {
-        holder.txtjudul_item.setText(dataList2.get(position).getJudul_item());
-        holder.txtTop_number.setText(dataList2.get(position).getTop_number());
-        holder.txtcreator_name.setText(dataList2.get(position).getCreator_name());
-        holder.txtitem_price.setText(dataList2.get(position).getItem_price());
+        final Card_Item_Model2 dataItem = dataList2.get(position);
+
+        holder.txtjudul_item.setText(dataItem.getJudul_item());
+        holder.txtTop_number.setText(dataItem.getTop_number());
+        holder.txtcreator_name.setText(dataItem.getCreator_name());
+        holder.txtitem_price.setText(dataItem.getItem_price());
+
+        Picasso.get().load(dataItem.getImageURL()).into(holder.imgview);
     }
 
     @Override
@@ -48,6 +57,7 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
     public class cardItemViewHolder extends RecyclerView.ViewHolder{
         private TextView txtjudul_item, txtTop_number, txtcreator_name, txtitem_price;
         private CardView card;
+        private ImageView imgview;
 
         public cardItemViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +67,8 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
             txtitem_price = (TextView) itemView.findViewById(R.id.price2);
 
             card = (CardView) itemView.findViewById(R.id.card_model_two);
+
+            imgview = (ImageView) itemView.findViewById(R.id.imageViewItemIMG2);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override

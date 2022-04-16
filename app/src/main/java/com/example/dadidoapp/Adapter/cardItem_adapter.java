@@ -1,9 +1,14 @@
 package com.example.dadidoapp.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,15 +18,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.cardItemViewHolder> {
 
     private ArrayList<Card_Item_Model> dataList;
+    private Context context;
 
-    public cardItem_adapter(ArrayList<Card_Item_Model> dataList) {
+    public cardItem_adapter(ArrayList<Card_Item_Model> dataList, Context context) {
         this.dataList = dataList;
+        this.context = context;
     }
 
     @NonNull
@@ -34,10 +44,14 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
 
     @Override
     public void onBindViewHolder(@NonNull cardItem_adapter.cardItemViewHolder holder, int position) {
-        holder.txtJudulGambar.setText(dataList.get(position).getNama_item());
-        holder.txtTokenId.setText(dataList.get(position).getToken_id());
-        holder.txtTotalPrice.setText(dataList.get(position).getTotal_price());
-        holder.txtTotallike.setText(dataList.get(position).getTotal_like());
+        final Card_Item_Model dataItem = dataList.get(position);
+
+        holder.txtJudulGambar.setText(dataItem.getNama_item());
+        holder.txtTokenId.setText(dataItem.getToken_id());
+        holder.txtTotalPrice.setText(dataItem.getTotal_price());
+        holder.txtTotallike.setText(dataItem.getTotal_like());
+
+        Picasso.get().load(dataItem.getPictureURL()).into(holder.imgview);
     }
 
     @Override
@@ -48,6 +62,7 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
     public class cardItemViewHolder extends RecyclerView.ViewHolder{
         private TextView txtJudulGambar, txtTokenId, txtTotalPrice, txtTotallike;
         private CardView card;
+        private ImageView imgview;
 
         public cardItemViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +72,8 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
             txtTotallike = (TextView) itemView.findViewById(R.id.textView_total_like);
 
             card = (CardView) itemView.findViewById(R.id.card_model_one);
+
+            imgview = (ImageView) itemView.findViewById(R.id.imageViewItemIMG);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override

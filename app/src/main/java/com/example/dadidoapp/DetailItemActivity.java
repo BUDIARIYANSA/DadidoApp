@@ -29,7 +29,7 @@ public class DetailItemActivity extends AppCompatActivity {
         addData();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
 
-        adapter = new cardItem_adapter(Card_Item_ArrayList);
+        adapter = new cardItem_adapter(Card_Item_ArrayList,DetailItemActivity.this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -39,10 +39,10 @@ public class DetailItemActivity extends AppCompatActivity {
 
     void addData(){
         Card_Item_ArrayList = new ArrayList<>();
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar satu", "12", "Suprapto","8"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar dua", "23", "Jimin","9"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar tiga", "23", "Koboi", "200"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar empat", "43", "Meong", "500"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar lima", "56", "Door", "500"));
+        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 1", "1414370309", "5.0","8","https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
+        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 2", "1214234560", "0.7","9","https://i.pinimg.com/736x/9d/22/c6/9d22c6839b684d30075ab1ae321ef058.jpg"));
+        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 3", "1214230345", "0.9", "200","https://media.raritysniper.com/azuki/3309-600.webp?cacheId=2"));
+        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 4", "1214378098", "4", "500","https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
+        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 5", "1214378098", "5", "500","https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
     }
 }

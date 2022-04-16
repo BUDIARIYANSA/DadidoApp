@@ -6,12 +6,14 @@ public class Card_Item_Model {
     private String token_id;
     private String total_price;
     private String total_like;
+    private String pictureURL;
 
-    public Card_Item_Model(String nama_item, String token_id, String total_price, String total_like){
+    public Card_Item_Model(String nama_item, String token_id, String total_price, String total_like, String pictureURL){
         this.nama_item = nama_item;
         this.token_id = token_id;
         this.total_price = total_price;
         this.total_like = total_like;
+        this.pictureURL = pictureURL;
     }
 
     public String getNama_item() {
@@ -30,6 +32,10 @@ public class Card_Item_Model {
         return total_like;
     }
 
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
     public void setNama_item(String nama_item) {
         this.nama_item = nama_item;
     }
@@ -44,5 +50,9 @@ public class Card_Item_Model {
 
     public void setTotal_like(String total_like) {
         this.total_like = total_like;
+    }
+
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
     }
 }

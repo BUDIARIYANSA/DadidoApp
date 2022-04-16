@@ -1,17 +1,21 @@
 package com.example.dadidoapp.LayoutModel;
 
+import android.media.Image;
+
 public class Card_Item_Model2 {
 
     private String judul_item;
     private String Top_number;
     private String creator_name;
     private String item_price;
+    private String ImageURL;
 
-    public Card_Item_Model2(String judul_item, String Top_number, String creator_name, String item_price){
+    public Card_Item_Model2(String judul_item, String Top_number, String creator_name, String item_price, String ImageURL){
         this.judul_item = judul_item;
         this.Top_number = Top_number;
         this.creator_name = creator_name;
         this.item_price = item_price;
+        this.ImageURL = ImageURL;
     }
 
     public String getJudul_item() {
@@ -30,6 +34,10 @@ public class Card_Item_Model2 {
         return item_price;
     }
 
+    public String getImageURL() {
+        return ImageURL;
+    }
+
     public void setJudul_item(String judul_item) {
         this.judul_item = judul_item;
     }
@@ -44,5 +52,9 @@ public class Card_Item_Model2 {
 
     public void setItem_price(String item_price) {
         this.item_price = item_price;
+    }
+
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
     }
 }

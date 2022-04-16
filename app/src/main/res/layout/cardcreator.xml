@@ -8,7 +8,8 @@
     app:cardElevation="8dp"
     android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/creatorCard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,11 +51,16 @@
 
             <TextView
                 android:id="@+id/textViewCollectionTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/poppinsregular"
+                android:maxLength="16"
+                android:maxLines="1"
                 android:text="Collection_title"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -64,14 +70,28 @@
 
             <TextView
                 android:id="@+id/textViewCreatorName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/poppinsregular"
                 android:text="CreatorName"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/tea_green"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewCreatorName2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCollectionTitle" />
+
+            <TextView
+                android:id="@+id/textViewCreatorName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:fontFamily="@font/poppinsregular"
+                android:text="by : "
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfileCreator"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCollectionTitle" />
 
