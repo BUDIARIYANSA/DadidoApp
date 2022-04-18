@@ -48,9 +48,11 @@ public class HomeActivity extends AppCompatActivity {
                 editor=sharedPreferences.edit();
                 editor.putString("username","");
                 editor.putString("password","");
+                editor.putString("remember","");
                 editor.commit();
                 Intent intent2 = new Intent(HomeActivity.this, MainActivity.class);
                 startActivity(intent2);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
