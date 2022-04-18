@@ -7,7 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class ProfilActivity extends AppCompatActivity {
+
+    private TextInputLayout username;
+    private TextInputLayout fullname;
+    private TextInputLayout email;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
