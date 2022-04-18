@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class ProfilActivity extends AppCompatActivity {
-
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -28,7 +28,6 @@ public class ProfilActivity extends AppCompatActivity {
     private EditText oldpass;
     private EditText newpass;
     private EditText confirm_newpass;
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button

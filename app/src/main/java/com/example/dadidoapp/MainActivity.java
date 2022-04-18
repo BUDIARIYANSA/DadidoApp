@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     String res = response.body().toString();
                     if(res.equals("success")) {
                         Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                        if(rememberme.isChecked()==true){
+                        if(rememberme.isChecked()){
                             sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
                             editor=sharedPreferences.edit();
                             editor.putString("username",usernameField.getEditText().getText().toString().trim());
