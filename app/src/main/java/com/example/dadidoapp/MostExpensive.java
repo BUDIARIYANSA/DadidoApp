@@ -47,11 +47,11 @@ public class MostExpensive extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        getData(view);
-        getData2(view);
+        mostExpensive(view);
+        dataCreator(view);
     }
 
-    public void getData(View view) {
+    public void mostExpensive(View view) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("CMD", "most_expensive")
@@ -66,7 +66,7 @@ public class MostExpensive extends Fragment {
                     Card_Item_ArrayList2 = new ArrayList<>();
                     for (int i = 0; i < data.size(); i++) {
                         Card_Item_ArrayList2.add(new Card_Item_Model2(data.get(i).getFileName(),
-                                "1214234560", data.get(i).getPrice().toString(), "100", data.get(i).getUrl()));
+                                "#"+(i+1), data.get(i).getDescription(), data.get(i).getPrice().toString(), data.get(i).getUrl()));
                     }
 
                     recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view3);
@@ -84,7 +84,7 @@ public class MostExpensive extends Fragment {
         });
     }
 
-    public void getData2(View view) {
+    public void dataCreator(View view) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("CMD", "data_creator")
