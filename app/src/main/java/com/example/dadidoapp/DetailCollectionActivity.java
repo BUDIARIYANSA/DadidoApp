@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,6 +25,13 @@ public class DetailCollectionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private cardItem_adapter adapter;
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
+
+    private ImageView imgbanner;
+    private ImageView imgProfil;
+    private TextView collection_name;
+    private TextView creator_name;
+    private TextView total_follower;
+    private TextView description;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
@@ -44,6 +56,28 @@ public class DetailCollectionActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        collection_name = (TextView) findViewById(R.id.textViewCollectionNameDetail);
+        creator_name = (TextView) findViewById(R.id.textViewCreatorNameDetail);
+        total_follower = (TextView) findViewById(R.id.textViewFollowerCountDetail);
+        description = (TextView) findViewById(R.id.textView8);
+        imgProfil = (ImageView) findViewById(R.id.imageViewProfileCreator2);
+        imgbanner = (ImageView) findViewById(R.id.imageViewCBanner);
+
+        Intent intent = getIntent();
+        String str_coll_name = intent.getStringExtra("collection_title");
+        String str_creator_name = intent.getStringExtra("creator_name");
+        String str_total_follower = intent.getStringExtra("total_follower");
+        String str_description = intent.getStringExtra("description");
+        String str_imgProfil_url = intent.getStringExtra("image_profile");
+        String str_imgbanner_url = intent.getStringExtra("image_banner");
+
+        collection_name.setText(str_coll_name);
+        creator_name.setText(str_creator_name);
+        total_follower.setText(str_total_follower);
+        description.setText(str_description);
+        Picasso.get().load(str_imgbanner_url).into(imgbanner);
+        Picasso.get().load(str_imgProfil_url).into(imgProfil);
 
         addData();
 

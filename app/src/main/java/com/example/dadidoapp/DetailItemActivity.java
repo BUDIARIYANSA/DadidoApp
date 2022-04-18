@@ -59,13 +59,13 @@ public class DetailItemActivity extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        imgview = findViewById(R.id.imageView2);
-        collection_name =findViewById(R.id.textViewCollectionName);
-        file_name = findViewById(R.id.textViewFileName);
-        total_price = findViewById(R.id.textViewCurrPrice);
-        tokenid = findViewById(R.id.textViewTokenId);
-        total_fav = findViewById(R.id.textViewFavTotal);
-        description = findViewById(R.id.textViewDescription);
+        imgview = (ImageView) findViewById(R.id.imageView2);
+        collection_name = (TextView) findViewById(R.id.textViewCollectionName);
+        file_name = (TextView) findViewById(R.id.textViewFileName);
+        total_price = (TextView) findViewById(R.id.textViewCurrPrice);
+        tokenid = (TextView) findViewById(R.id.textViewTokenId);
+        total_fav = (TextView) findViewById(R.id.textViewFavTotal);
+        description = (TextView) findViewById(R.id.textViewDescription);
 
         Intent intent = getIntent();
         String str_file_name=intent.getStringExtra("image_title");
@@ -82,10 +82,6 @@ public class DetailItemActivity extends AppCompatActivity {
         description.setText(str_creatorName);
 
         Picasso.get().load(str_ImageUrl).into(imgview);
-
-        //Bundle extras = getIntent().getExtras();
-        //Bitmap bmp = (Bitmap) extras.getParcelable("imagebitmap");
-        //imgview.setInt(bmp );
 
 
         //below this call lists of cards
