@@ -1,17 +1,16 @@
 package com.example.dadidoapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 
-import com.example.dadidoapp.Adapter.CardItem2_adapter;
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
-import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 
 import java.util.ArrayList;
 
@@ -22,9 +21,28 @@ public class DetailItemActivity extends AppCompatActivity {
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_item);
+
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+
+        // Customize the back button
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_light);
+
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         addData();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);

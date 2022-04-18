@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     TextInputLayout usernameField;
     Button btnLogin;
     Button goRegis;
+    CheckBox rememberme;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +51,27 @@ public class MainActivity extends AppCompatActivity {
         usernameField = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         btnLogin = (Button) findViewById(R.id.buttonLogin);
         goRegis = (Button) findViewById(R.id.goRegister);
+        rememberme = (CheckBox) findViewById(R.id.checkBox_rememberMe);
+
+        sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+
+        String username=sharedPreferences.getString("username","");
+        String password=sharedPreferences.getString("password","");
+
+        if (!username.equals("") && !password.equals("") )
+        {
+            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            finish();
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 login();
+
             }
         });
 
@@ -82,6 +104,20 @@ public class MainActivity extends AppCompatActivity {
                     String res = response.body().toString();
                     if(res.equals("success")) {
                         Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        if(rememberme.isChecked()==true){
+                            sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+                            editor=sharedPreferences.edit();
+                            editor.putString("username",usernameField.toString());
+                            editor.putString("password",passwordField.toString());
+                            editor.commit();
+
+                        }else{
+                            sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+                            editor=sharedPreferences.edit();
+                            editor.putString("username","");
+                            editor.putString("password","");
+                            editor.commit();
+                        }
                         startActivity(new Intent(MainActivity.this, HomeActivity.class));
                         finish();
                     } else {
