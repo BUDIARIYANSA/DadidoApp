@@ -78,7 +78,7 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
                 public void onClick(View view) {
                     int position = cardItemViewHolder.this.getLayoutPosition();
                     final Card_Item_Model2 dataItem = dataList2.get(position);
-                    
+
                     Intent intent = new Intent(card.getContext(), DetailItemActivity.class);
 
                     intent.putExtra("image_title", dataItem.getJudul_item());
