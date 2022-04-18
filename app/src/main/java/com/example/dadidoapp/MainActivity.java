@@ -58,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         String username=sharedPreferences.getString("username","");
         String password=sharedPreferences.getString("password","");
+        String remember=sharedPreferences.getString("remember","");
 
-        if (!username.equals("") && !password.equals("") )
+        if (!remember.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
@@ -107,14 +108,16 @@ public class MainActivity extends AppCompatActivity {
                         if(rememberme.isChecked()){
                             sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
                             editor=sharedPreferences.edit();
-                            editor.putString("username",usernameField.toString());
-                            editor.putString("password",passwordField.toString());
+                            editor.putString("username",usernameField.getEditText().getText().toString().trim());
+                            editor.putString("password",passwordField.getEditText().getText().toString().trim());
+                            editor.putString("remember","remember");
                             editor.commit();
                         }else{
                             sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
                             editor=sharedPreferences.edit();
-                            editor.putString("username","");
-                            editor.putString("password","");
+                            editor.putString("username",usernameField.getEditText().getText().toString().trim());
+                            editor.putString("password",passwordField.getEditText().getText().toString().trim());
+                            editor.putString("remember","");
                             editor.commit();
                         }
                         startActivity(new Intent(MainActivity.this, HomeActivity.class));
