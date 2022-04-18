@@ -10,7 +10,7 @@ public class Item {
     @SerializedName("file_name")
     private String fileName;
 
-    @SerializedName("url")
+    @SerializedName("image_url")
     private String url;
 
     @SerializedName("description")
