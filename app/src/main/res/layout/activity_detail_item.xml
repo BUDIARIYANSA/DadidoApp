@@ -294,16 +294,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewCPrice" />
 
             <Button
-                android:id="@+id/button_buy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Buy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <Button
                 android:id="@+id/button_item_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -340,6 +330,16 @@
                     android:layout_marginBottom="6dp" />
 
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="208dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icons_love_100_empty" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
