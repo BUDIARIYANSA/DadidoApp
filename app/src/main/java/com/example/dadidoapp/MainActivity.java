@@ -2,11 +2,16 @@ package com.example.dadidoapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        Drawable dr = ContextCompat.getDrawable(MainActivity.this,R.drawable.daradi_logo2);
+        Bitmap logo = ((BitmapDrawable) dr).getBitmap();
+        // Scale it to 50 x 50
+        Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(logo, 40, 30, true));
+        actionBar.setHomeAsUpIndicator(d);// set drawable icon
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         ActivityResultLauncher<Intent> intentLaunch = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

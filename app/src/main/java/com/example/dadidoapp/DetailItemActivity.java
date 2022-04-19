@@ -75,6 +75,8 @@ public class DetailItemActivity extends AppCompatActivity {
         String str_creatorName=intent.getStringExtra("creator_name");
         String str_ImageUrl = intent.getStringExtra("image_url");
 
+        actionBar.setTitle(str_file_name);//this is for actionbar
+
         tokenid.setText(str_TokenId);
         file_name.setText(str_file_name);
         total_price.setText(str_TotalPrice);
