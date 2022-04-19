@@ -47,6 +47,9 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
         holder.txtitem_price.setText(dataItem.getItem_price());
 
         Picasso.get().load(dataItem.getImageURL()).into(holder.imgview);
+
+        Intent intent = new Intent(holder.card.getContext(), DetailItemActivity.class);
+        intent.putExtra("image_url", dataItem.getImageURL());
     }
 
     @Override
@@ -73,7 +76,19 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    card.getContext().startActivity(new Intent(card.getContext(), DetailItemActivity.class));
+                    int position = cardItemViewHolder.this.getLayoutPosition();
+                    final Card_Item_Model2 dataItem = dataList2.get(position);
+
+                    Intent intent = new Intent(card.getContext(), DetailItemActivity.class);
+
+                    intent.putExtra("image_title", dataItem.getJudul_item());
+                    //intent.putExtra("TokenId", txtTokenId.getText().toString().trim());
+                    intent.putExtra("creator_name", dataItem.getCreator_name());
+                    intent.putExtra("TotalPrice", dataItem.getItem_price());
+                    intent.putExtra("image_url", dataItem.getImageURL());
+                    //intent.putExtra("TotalLike", txtTotallike.getText().toString().trim());
+
+                    card.getContext().startActivity(intent);
                 }
             });
         }

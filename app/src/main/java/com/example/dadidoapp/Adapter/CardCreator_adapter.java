@@ -78,7 +78,18 @@ public class CardCreator_adapter extends RecyclerView.Adapter<CardCreator_adapte
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    card.getContext().startActivity(new Intent(card.getContext(), DetailCollectionActivity.class));
+                    int position = CardCreator_adapter.cardCreatorViewHolder.this.getLayoutPosition();
+                    final Card_Creator_model dataItem = dataList3.get(position);
+
+                    Intent intent = new Intent(card.getContext(), DetailCollectionActivity.class);
+                    intent.putExtra("image_banner", dataItem.getCollectionBannerURL());
+                    intent.putExtra("image_profile", dataItem.getCreatorDP_URL());
+                    intent.putExtra("creator_name", dataItem.getCreatorName());
+                    intent.putExtra("collection_title",dataItem.getCollectionTitle());
+                    intent.putExtra("description",dataItem.getDescription());
+                    intent.putExtra("total_follower",dataItem.getTotalFollower());
+
+                    card.getContext().startActivity(intent);
                 }
             });
         }

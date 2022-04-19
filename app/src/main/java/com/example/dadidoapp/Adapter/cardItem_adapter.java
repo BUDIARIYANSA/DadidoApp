@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 import com.example.dadidoapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +30,7 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
 
     private ArrayList<Card_Item_Model> dataList;
     private Context context;
+    private String url_img;
 
     public cardItem_adapter(ArrayList<Card_Item_Model> dataList, Context context) {
         this.dataList = dataList;
@@ -52,6 +55,7 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
         holder.txtTotallike.setText(dataItem.getTotal_like());
 
         Picasso.get().load(dataItem.getPictureURL()).into(holder.imgview);
+
     }
 
     @Override
@@ -78,7 +82,18 @@ public class cardItem_adapter extends RecyclerView.Adapter<cardItem_adapter.card
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    card.getContext().startActivity(new Intent(card.getContext(), DetailItemActivity.class));
+                    int position = cardItem_adapter.cardItemViewHolder.this.getLayoutPosition();
+                    final Card_Item_Model dataItem = dataList.get(position);
+
+                    Intent intent = new Intent(card.getContext(), DetailItemActivity.class);
+
+                    intent.putExtra("image_title", dataItem.getNama_item());
+                    intent.putExtra("TokenId", dataItem.getToken_id());
+                    intent.putExtra("TotalPrice", dataItem.getTotal_price());
+                    intent.putExtra("TotalLike", dataItem.getTotal_like());
+                    intent.putExtra("image_url", dataItem.getPictureURL());
+                    card.getContext().startActivity(intent);
+
                 }
             });
         }

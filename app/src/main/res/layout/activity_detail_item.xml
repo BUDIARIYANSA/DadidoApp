@@ -78,19 +78,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <TextView
-                android:id="@+id/textViewOwner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppinsregular"
-                android:text="Owner_Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/leaf_green"
-                app:layout_constraintStart_toEndOf="@+id/textViewOwnedBy"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFileName" />
-
-            <TextView
                 android:id="@+id/textViewOwnedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,6 +87,19 @@
                 android:text="Owned By : "
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFileName" />
+
+            <TextView
+                android:id="@+id/textViewOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Owner_Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/leaf_green"
+                app:layout_constraintStart_toEndOf="@+id/textViewOwnedBy"
                 app:layout_constraintTop_toBottomOf="@+id/textViewFileName" />
 
             <TextView
@@ -149,7 +149,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewDet" />
 
             <TextView
-                android:id="@+id/textViewItemId"
+                android:id="@+id/textViewTokenId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
@@ -168,7 +168,7 @@
                 android:text="DadidoCoin"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewItemId" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTokenId" />
 
             <TextView
                 android:id="@+id/textViewdetails4"

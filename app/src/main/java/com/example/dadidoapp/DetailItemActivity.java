@@ -6,11 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -19,6 +24,16 @@ public class DetailItemActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private cardItem_adapter adapter;
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
+
+    private ImageView imgview;
+    private TextView collection_name;
+    private TextView file_name;
+    private TextView owner_name;
+    private TextView description;
+    private TextView total_fav;
+    private TextView total_favorite;
+    private TextView total_price;
+    private TextView tokenid;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
@@ -44,6 +59,32 @@ public class DetailItemActivity extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        imgview = (ImageView) findViewById(R.id.imageView2);
+        collection_name = (TextView) findViewById(R.id.textViewCollectionName);
+        file_name = (TextView) findViewById(R.id.textViewFileName);
+        total_price = (TextView) findViewById(R.id.textViewCurrPrice);
+        tokenid = (TextView) findViewById(R.id.textViewTokenId);
+        total_fav = (TextView) findViewById(R.id.textViewFavTotal);
+        description = (TextView) findViewById(R.id.textViewDescription);
+
+        Intent intent = getIntent();
+        String str_file_name=intent.getStringExtra("image_title");
+        String str_TokenId=intent.getStringExtra("TokenId");
+        String str_TotalPrice=intent.getStringExtra("TotalPrice");
+        String str_TotalLike=intent.getStringExtra("TotalLike");
+        String str_creatorName=intent.getStringExtra("creator_name");
+        String str_ImageUrl = intent.getStringExtra("image_url");
+
+        tokenid.setText(str_TokenId);
+        file_name.setText(str_file_name);
+        total_price.setText(str_TotalPrice);
+        total_fav.setText(str_TotalLike);
+        description.setText(str_creatorName);
+
+        Picasso.get().load(str_ImageUrl).into(imgview);
+
+
+        //below this call lists of cards
         addData();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
 
