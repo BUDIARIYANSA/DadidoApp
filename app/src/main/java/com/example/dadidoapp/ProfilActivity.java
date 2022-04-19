@@ -70,6 +70,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Profile");
 
         profile_url = (ImageView) findViewById(R.id.imageProfile);
         username = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
