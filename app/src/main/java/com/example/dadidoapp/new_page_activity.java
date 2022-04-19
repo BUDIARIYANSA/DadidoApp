@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
@@ -58,7 +59,7 @@ public class new_page_activity extends Fragment {
                     Card_Item_ArrayList = new ArrayList<>();
                     for (int i = 0; i < data.size(); i++) {
                         Card_Item_ArrayList.add(new Card_Item_Model(data.get(i).getFileName(),
-                                "1214234560", data.get(i).getPrice().toString(), "100", data.get(i).getUrl()));
+                                data.get(i).getId().toString(), data.get(i).getPrice().toString(), "100", data.get(i).getUrl()));
                     }
                     recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -68,16 +69,15 @@ public class new_page_activity extends Fragment {
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
 
                     recyclerView.setLayoutManager(gridLayoutManager);
-
                     recyclerView.setAdapter(adapter);
                 } else {
-                    System.out.println("AAAAA");
+                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
-                System.out.println("BBBBB");
+                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

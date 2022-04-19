@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -101,47 +102,61 @@ public class ProfilActivity extends AppCompatActivity {
         String new_pass = newpass.getEditText().getText().toString().trim();
         String confirm_newPass = confirm_newpass.getEditText().getText().toString().trim();
 
-        if(!(new_pass).equals(confirm_newPass)) {
-            Toast.makeText(ProfilActivity.this, "New password and confirm new password not same!", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(user_name)) {
+            Toast.makeText(this, "Username can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(user_fullname)) {
+            Toast.makeText(this, "Fullname can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(user_email)) {
+            Toast.makeText(this, "Email can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(old_pass)) {
+            Toast.makeText(this, "Old password can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(new_pass)) {
+            Toast.makeText(this, "New password can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(confirm_newPass)) {
+            Toast.makeText(this, "Confirm password can't empty..!", Toast.LENGTH_SHORT).show();
         } else {
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("CMD", "update_profile")
-                    .addFormDataPart("username", user_name)
-                    .addFormDataPart("email", user_email)
-                    .addFormDataPart("fullname", user_fullname)
-                    .addFormDataPart("home_address", user_home_address)
-                    .addFormDataPart("old_password", old_pass)
-                    .addFormDataPart("new_password", new_pass)
-                    .build();
+            if(!(new_pass).equals(confirm_newPass)) {
+                Toast.makeText(ProfilActivity.this, "New password and confirm new password not same!", Toast.LENGTH_SHORT).show();
+            } else {
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("CMD", "update_profile")
+                        .addFormDataPart("username", user_name)
+                        .addFormDataPart("email", user_email)
+                        .addFormDataPart("fullname", user_fullname)
+                        .addFormDataPart("home_address", user_home_address)
+                        .addFormDataPart("old_password", old_pass)
+                        .addFormDataPart("new_password", new_pass)
+                        .build();
 
-            Call call = apiList.updateProfile(requestBody);
-            call.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    if(response.isSuccessful()) {
-                        String res = response.body().toString();
-                        if(res.equals("success")) {
-                            setPreference(ProfilActivity.this, "username", user_name);
-                            setPreference(ProfilActivity.this, "password", new_pass);
+                Call call = apiList.updateProfile(requestBody);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        if(response.isSuccessful()) {
+                            String res = response.body().toString();
+                            if(res.equals("success")) {
+                                setPreference(ProfilActivity.this, "username", user_name);
+                                setPreference(ProfilActivity.this, "password", new_pass);
 
-                            Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
-                            finish();
+                                Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call call, Throwable t) {
-
-                }
-            });
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
-
-
     }
 
     public void loadDataProfile() {
