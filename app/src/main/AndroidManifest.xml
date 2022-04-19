@@ -14,31 +14,45 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.example.dadidoapp.CreateItemActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".CreateCollectionActivity"
+            android:exported="false"/>
         <activity
-            android:name="com.example.dadidoapp.CreateCollectionActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".CreateItemActivity"
+            android:exported="false"/>
         <activity
-            android:name="com.example.dadidoapp.RegisterActivity"
+            android:name=".SearchSuggestionActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.dadidoapp.MainActivity"
-            android:exported="true">
+            android:name=".ProfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailCollectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FavoritActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true"
+            android:label="Dadido">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

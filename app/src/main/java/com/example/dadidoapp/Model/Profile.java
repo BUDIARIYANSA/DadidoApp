@@ -2,7 +2,8 @@ package com.example.dadidoapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class Profile {
+
     @SerializedName("username")
     private String username;
 
@@ -18,20 +19,16 @@ public class User {
     @SerializedName("home_address")
     private String homeAddress;
 
-    public User(String username, String fullname, String email, String password, String homeAddress) {
+    @SerializedName("profile_url")
+    private String profileURL;
+
+    public Profile(String username, String fullname, String email, String password, String homeAddress, String profileURL) {
         this.username = username;
         this.fullname = fullname;
         this.email = email;
         this.password = password;
         this.homeAddress = homeAddress;
-    }
-
-    public String getHomeAddress() {
-        return homeAddress;
-    }
-
-    public void setHomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
+        this.profileURL = profileURL;
     }
 
     public String getUsername() {
@@ -64,5 +61,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public String getProfileURL() {
+        return profileURL;
+    }
+
+    public void setProfileURL(String profileURL) {
+        this.profileURL = profileURL;
     }
 }

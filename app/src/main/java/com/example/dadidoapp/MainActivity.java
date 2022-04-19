@@ -1,11 +1,21 @@
 package com.example.dadidoapp;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -22,28 +32,68 @@ public class MainActivity extends AppCompatActivity {
     TextInputLayout usernameField;
     Button btnLogin;
     Button goRegis;
+    CheckBox rememberme;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+        Drawable dr = ContextCompat.getDrawable(MainActivity.this,R.drawable.daradi_logo2);
+        Bitmap logo = ((BitmapDrawable) dr).getBitmap();
+        // Scale it to 50 x 50
+        Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(logo, 40, 30, true));
+        actionBar.setHomeAsUpIndicator(d);// set drawable icon
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        ActivityResultLauncher<Intent> intentLaunch = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        usernameField.getEditText().setText(result.getData().getStringExtra("username"));
+                        passwordField.getEditText().setText(result.getData().getStringExtra("password"));
+                    }
+                }
+        );
+
         passwordField = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
         usernameField = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         btnLogin = (Button) findViewById(R.id.buttonLogin);
         goRegis = (Button) findViewById(R.id.goRegister);
+        rememberme = (CheckBox) findViewById(R.id.checkBox_rememberMe);
+
+        sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+
+        String username=sharedPreferences.getString("username","");
+        String password=sharedPreferences.getString("password","");
+        String remember=sharedPreferences.getString("remember","");
+
+        if (!remember.equals(""))
+        {
+            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            finish();
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 login();
+
             }
         });
 
         goRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                intentLaunch.launch(intent);
             }
         });
     }
@@ -66,7 +116,28 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 if(response.isSuccessful()) {
                     String res = response.body().toString();
-                    Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+                    if(res.equals("success")) {
+                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        if(rememberme.isChecked()){
+                            sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+                            editor=sharedPreferences.edit();
+                            editor.putString("username",usernameField.getEditText().getText().toString().trim());
+                            editor.putString("password",passwordField.getEditText().getText().toString().trim());
+                            editor.putString("remember","remember");
+                            editor.commit();
+                        }else{
+                            sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+                            editor=sharedPreferences.edit();
+                            editor.putString("username",usernameField.getEditText().getText().toString().trim());
+                            editor.putString("password",passwordField.getEditText().getText().toString().trim());
+                            editor.putString("remember","");
+                            editor.commit();
+                        }
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }

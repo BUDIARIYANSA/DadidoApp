@@ -99,11 +99,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
         />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="@string/login_textview_to_register"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_rememberMe" />
+
     <Button
         android:id="@+id/goRegister"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="103dp"
         android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/leaf_green"
         android:fontFamily="@font/poppinsregular"
         android:text="@string/register_textview"
@@ -113,14 +126,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <TextView
-        android:id="@+id/textView"
+    <CheckBox
+        android:id="@+id/checkBox_rememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:fontFamily="@font/poppinsregular"
-        android:text="@string/login_textview_to_register"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="Remember Me"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />

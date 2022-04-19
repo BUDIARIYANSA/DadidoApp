@@ -2,6 +2,7 @@ package com.example.dadidoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -83,7 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
                     String res = response.body().toString();
                     Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
 
-                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    Intent intent = new Intent();
+                    intent.putExtra("username", username);
+                    intent.putExtra("password", password);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -91,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "Failed to send / get data from server!", Toast.LENGTH_SHORT).show();
             }
         });
     }
