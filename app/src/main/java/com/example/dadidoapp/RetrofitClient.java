@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static final String baseURL = "http://192.168.18.11/Webservice-Dadido/";
+
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient() {
