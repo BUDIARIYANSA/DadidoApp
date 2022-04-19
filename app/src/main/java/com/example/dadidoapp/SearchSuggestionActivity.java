@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
+import com.example.dadidoapp.Adapter.cardItem_adapter_onSearch;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class SearchSuggestionActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private cardItem_adapter adapter;
+    private cardItem_adapter_onSearch adapter;
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
 
     SharedPreferences sharedPreferences;
@@ -46,6 +47,7 @@ public class SearchSuggestionActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
                 return false;
             }
         });
@@ -102,8 +104,8 @@ public class SearchSuggestionActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        adapter = new cardItem_adapter(Card_Item_ArrayList,SearchSuggestionActivity.this);
-
+        adapter = new cardItem_adapter_onSearch(Card_Item_ArrayList,SearchSuggestionActivity.this);
+        adapter.getFilter().filter(str_search);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchSuggestionActivity.this, 2, GridLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(gridLayoutManager);
