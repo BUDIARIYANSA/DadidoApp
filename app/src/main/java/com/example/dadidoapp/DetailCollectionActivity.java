@@ -72,6 +72,8 @@ public class DetailCollectionActivity extends AppCompatActivity {
         String str_imgProfil_url = intent.getStringExtra("image_profile");
         String str_imgbanner_url = intent.getStringExtra("image_banner");
 
+        actionBar.setTitle(str_coll_name);//this is for actionbar
+
         collection_name.setText(str_coll_name);
         creator_name.setText(str_creator_name);
         total_follower.setText(str_total_follower);
