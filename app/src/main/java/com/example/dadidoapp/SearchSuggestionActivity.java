@@ -104,10 +104,14 @@ public class SearchSuggestionActivity extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        loadData(actionBar);
+        Intent intent = getIntent();
+        String str_search = intent.getStringExtra("SearchItem");
+        actionBar.setTitle(str_search);
+
+        loadData(str_search);
     }
 
-    public void loadData(ActionBar actionBar){
+    public void loadData(String str_search){
         ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -126,10 +130,6 @@ public class SearchSuggestionActivity extends AppCompatActivity {
                         Card_Item_ArrayList.add(new Card_Item_Model(data.get(i).getFileName(),
                                 data.get(i).getId().toString(), data.get(i).getPrice().toString(),"8",data.get(i).getUrl()));
                     }
-                    
-                    Intent intent = getIntent();
-                    String str_search = intent.getStringExtra("SearchItem");
-                    actionBar.setTitle(str_search);
 
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
