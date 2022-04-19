@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
+    @SerializedName("id")
+    private Integer id;
+
     @SerializedName("id_collection")
     private Integer idCollection;
 
@@ -22,13 +25,22 @@ public class Item {
     @SerializedName("price")
     private Integer price;
 
-    public Item(Integer idCollection, String fileName, String url, String description, String sellStatus, Integer price) {
+    public Item(Integer idCollection, String fileName, String url, String description, String sellStatus, Integer price, Integer id) {
+        this.id = id;
         this.idCollection = idCollection;
         this.fileName = fileName;
         this.url = url;
-        this.description = Item.this.description;
+        this.description = description;
         this.sellStatus = sellStatus;
         this.price = price;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getIdCollection() {

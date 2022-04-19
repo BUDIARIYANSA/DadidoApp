@@ -34,4 +34,7 @@ public interface ApiList {
 
     @POST("webservice.php")
     Call<Object> updateProfile(@Body RequestBody body);
+
+    @POST("webservice.php")
+    Call<ArrayList<Item>> searchItem(@Body RequestBody body);
 }

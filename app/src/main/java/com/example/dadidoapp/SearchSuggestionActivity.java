@@ -17,8 +17,16 @@ import android.widget.SearchView;
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.Adapter.cardItem_adapter_onSearch;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.Model.Item;
 
 import java.util.ArrayList;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchSuggestionActivity extends AppCompatActivity {
 
@@ -96,29 +104,49 @@ public class SearchSuggestionActivity extends AppCompatActivity {
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        addData();
-
         Intent intent = getIntent();
         String str_search = intent.getStringExtra("SearchItem");
         actionBar.setTitle(str_search);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        adapter = new cardItem_adapter_onSearch(Card_Item_ArrayList,SearchSuggestionActivity.this);
-        adapter.getFilter().filter(str_search);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchSuggestionActivity.this, 2, GridLayoutManager.VERTICAL, false);
-
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        recyclerView.setAdapter(adapter);
+        loadData(str_search);
     }
 
-    void addData(){
-        Card_Item_ArrayList = new ArrayList<>();
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 1", "1414370309", "5.0","8","https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 2", "1214234560", "0.7","9","https://i.pinimg.com/736x/9d/22/c6/9d22c6839b684d30075ab1ae321ef058.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 3", "1214230345", "0.9", "200","https://media.raritysniper.com/azuki/3309-600.webp?cacheId=2"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 4", "1214378098", "4", "500","https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 5", "1214378098", "5", "500","https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
+    public void loadData(String str_search){
+        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "on_search")
+                .build();
+
+        Call<ArrayList<Item>> call = apiList.searchItem(requestBody);
+        call.enqueue(new Callback<ArrayList<Item>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                if (response.isSuccessful()) {
+                    Card_Item_ArrayList = new ArrayList<>();
+                    ArrayList<Item> data = response.body();
+
+                    for (int i = 0; i < data.size(); i++) {
+                        Card_Item_ArrayList.add(new Card_Item_Model(data.get(i).getFileName(),
+                                data.get(i).getId().toString(), data.get(i).getPrice().toString(),"8",data.get(i).getUrl()));
+                    }
+
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+                    adapter = new cardItem_adapter_onSearch(Card_Item_ArrayList,SearchSuggestionActivity.this);
+                    adapter.getFilter().filter(str_search);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchSuggestionActivity.this, 2, GridLayoutManager.VERTICAL, false);
+
+                    recyclerView.setLayoutManager(gridLayoutManager);
+
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
+
+            }
+        });
     }
 }
