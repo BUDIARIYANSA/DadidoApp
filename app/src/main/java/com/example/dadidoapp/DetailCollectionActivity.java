@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,13 +27,13 @@ public class DetailCollectionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private cardItem_adapter adapter;
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
-
     private ImageView imgbanner;
     private ImageView imgProfil;
     private TextView collection_name;
     private TextView creator_name;
     private TextView total_follower;
     private TextView description;
+    private Button buttonToCreateItem;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
@@ -63,6 +65,13 @@ public class DetailCollectionActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.textView8);
         imgProfil = (ImageView) findViewById(R.id.imageViewProfileCreator2);
         imgbanner = (ImageView) findViewById(R.id.imageViewCBanner);
+        buttonToCreateItem = (Button) findViewById(R.id.buttonToCreateItem);
+        buttonToCreateItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DetailCollectionActivity.this, CreateItemActivity.class));
+            }
+        });
 
         Intent intent = getIntent();
         String str_coll_name = intent.getStringExtra("collection_title");
@@ -84,13 +93,11 @@ public class DetailCollectionActivity extends AppCompatActivity {
         addData();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
         adapter = new cardItem_adapter(Card_Item_ArrayList,DetailCollectionActivity.this);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailCollectionActivity.this, 2, GridLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(gridLayoutManager);
-
         recyclerView.setAdapter(adapter);
     }
 
