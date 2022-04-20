@@ -222,11 +222,13 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="93dp"
             android:layout_height="45dp"
+            android:layout_marginBottom="50dp"
             android:backgroundTint="@color/leaf_green"
             android:fontFamily="@font/poppinsregular"
             android:text="@string/button_text_to_login"
             android:textAllCaps="false"
             android:textColor="@color/leaf_green"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
