@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.example.dadidoapp.Adapter.CardFavorite_adapter;
@@ -23,6 +24,7 @@ import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class FavoritActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
     private CardFavorite_adapter adapter;
+    FloatingActionButton mCollection;
     private ArrayList<Card_Favorite_Model> Card_Favorite_ArrayList;
 
     SharedPreferences sharedPreferences;
@@ -105,6 +108,7 @@ public class FavoritActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorit);
+        mCollection = (FloatingActionButton) findViewById(R.id.mCollection);
 
         ActionBar actionBar = getSupportActionBar();
         Drawable dr = ContextCompat.getDrawable(FavoritActivity.this, R.drawable.daradi_logo2);
@@ -132,6 +136,13 @@ public class FavoritActivity extends AppCompatActivity {
             }
         });
 
+        mCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FavoritActivity.this, DetailCollectionActivity.class));
+            }
+        });
+
         addData();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_favorite);
 
@@ -141,7 +152,6 @@ public class FavoritActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
-
     }
 
     void addData(){
