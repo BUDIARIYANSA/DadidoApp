@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +35,11 @@ public class DetailCollectionActivity extends AppCompatActivity {
     private TextView creator_name;
     private TextView total_follower;
     private TextView description;
+
+    private Button btn_add_new_item;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
@@ -92,6 +100,29 @@ public class DetailCollectionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerView.setAdapter(adapter);
+
+        btn_add_new_item = (Button) findViewById(R.id.buttonToCreateItem);
+        btn_add_new_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(DetailCollectionActivity.this, DetailItemActivity.class);
+                startActivity(intent1);
+
+            }
+        });
+
+        sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+        String username=sharedPreferences.getString("username","");
+        if(username==str_creator_name){
+            btn_add_new_item.setVisibility(View.VISIBLE);
+            btn_add_new_item.setEnabled(true);
+        }else{
+            btn_add_new_item.setVisibility(View.INVISIBLE);
+            btn_add_new_item.setEnabled(false);
+        }
+
+
     }
 
     void addData(){
