@@ -31,7 +31,6 @@ public class HomeActivity extends AppCompatActivity {
     Button new_btn;
     Button trending_btn;
     FloatingActionButton mCollection;
-    Toolbar toolbar;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -153,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
         mCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(HomeActivity.this, DetailCollectionActivity.class));
             }
         });
 
