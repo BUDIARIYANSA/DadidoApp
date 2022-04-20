@@ -50,6 +50,8 @@ public class SearchSuggestionActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                ActionBar actionBar = getSupportActionBar();
+                actionBar.setTitle(s);
                 return false;
             }
 

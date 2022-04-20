@@ -1,9 +1,14 @@
 package com.example.dadidoapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +35,14 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ActionBar actionBar = getSupportActionBar();
+        Drawable dr = ContextCompat.getDrawable(RegisterActivity.this,R.drawable.daradi_logo2);
+        Bitmap logo = ((BitmapDrawable) dr).getBitmap();
+        // Scale it to 50 x 50
+        Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(logo, 40, 30, true));
+        actionBar.setHomeAsUpIndicator(d);// set drawable icon
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         usernameField = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         emailField = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);

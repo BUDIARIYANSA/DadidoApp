@@ -163,7 +163,10 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.mHome: //startActivity(new Intent(HomeActivity.this, HomeActivity.class)); finish();
                         break;
-                    case R.id.mFavorite: startActivity(new Intent(HomeActivity.this, FavoritActivity.class)); finish();
+                    case R.id.mFavorite:
+                        Intent intent = new Intent(HomeActivity.this, FavoritActivity.class);
+                        startActivity(intent); finish();
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                 }
                 return true;
