@@ -59,12 +59,13 @@ public class WalletTwoActivity extends AppCompatActivity {
         buttonDeposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String total_funds = Float.toString(Float.parseFloat(totalFunds.getEditText().getText().toString().trim()) / 800000000);
                 RequestBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addFormDataPart("CMD", "add_funds")
                         .addFormDataPart("username", getPreference(getApplicationContext(), "username"))
                         .addFormDataPart("password", getPreference(getApplicationContext(), "password"))
-                        .addFormDataPart("total_funds", totalFunds.getEditText().getText().toString().trim())
+                        .addFormDataPart("total_funds", total_funds)
                         .build();
                 Call call = apiList.deposit(requestBody);
                 call.enqueue(new Callback() {
@@ -73,7 +74,7 @@ public class WalletTwoActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             String res = response.body().toString();
                             if(res.equals("success")) {
-                                startActivity(new Intent(WalletTwoActivity.this, HomeActivity.class));
+                                startActivity(new Intent(WalletTwoActivity.this, WalletActivity.class));
                                 finish();
                                 Toast.makeText(WalletTwoActivity.this, "Deposit funds Successful!!", Toast.LENGTH_SHORT).show();
                             } else {
