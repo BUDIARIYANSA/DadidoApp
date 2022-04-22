@@ -3,6 +3,7 @@ import com.example.dadidoapp.Model.Creator;
 import com.example.dadidoapp.Model.Item;
 import com.example.dadidoapp.Model.Profile;
 import com.example.dadidoapp.Model.User;
+import com.example.dadidoapp.Model.Wallet;
 
 import java.util.ArrayList;
 
@@ -37,4 +38,10 @@ public interface ApiList {
 
     @POST("webservice.php")
     Call<ArrayList<Item>> searchItem(@Body RequestBody body);
+
+    @POST("webservice.php")
+    Call<ArrayList<Wallet>> getWallet(@Body RequestBody body);
+
+    @POST("webservice.php")
+    Call<Object> deposit(@Body RequestBody body);
 }

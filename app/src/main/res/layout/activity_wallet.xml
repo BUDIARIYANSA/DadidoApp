@@ -25,20 +25,22 @@
         android:id="@+id/imageButton2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="116dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="12dp"
         android:background="@null"
         android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/totalFunds"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texttitle"
-        app:srcCompat="@drawable/daradi_currency" />
+        app:srcCompat="@drawable/daradi_currency"/>
 
     <TextView
-        android:id="@+id/texttitle3"
+        android:id="@+id/totalFunds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="140dp"
+        android:layout_marginEnd="128dp"
         android:fontFamily="@font/poppins_bold"
         android:text="0.00 DADIDO"
         android:textAlignment="center"
@@ -47,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/texttitle" />
 
     <Button
-        android:id="@+id/buttonRegister"
+        android:id="@+id/buttonAddFunds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="130dp"
@@ -61,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texttitle3"
+        app:layout_constraintTop_toBottomOf="@+id/totalFunds"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
