@@ -98,7 +98,7 @@ public class MostExpensive extends Fragment {
                     card_creator_ArrayList = new ArrayList<>();
 
                     for (int i = 0; i < data.size(); i++) {
-                        card_creator_ArrayList.add(new Card_Creator_model(data.get(i).getCollectionName(), data.get(i).getFullName(), "60",
+                        card_creator_ArrayList.add(new Card_Creator_model(data.get(i).getCollectionName(), data.get(i).getUsername(), "60",
                                 data.get(i).getDescription(), data.get(i).getProfileURL(), data.get(i).getImageBanner()));
                     }
 

@@ -13,17 +13,17 @@ public class Creator {
     @SerializedName("description")
     String description;
 
-    @SerializedName("fullname")
-    String fullName;
+    @SerializedName("username")
+    String username;
 
     @SerializedName("profile_url")
     String profileURL;
 
-    public Creator(String collectionName, String imageBanner, String description, String fullName, String profileURL) {
+    public Creator(String collectionName, String imageBanner, String description, String username, String profileURL) {
         this.collectionName = collectionName;
         this.imageBanner = imageBanner;
         this.description = description;
-        this.fullName = fullName;
+        this.username = username;
         this.profileURL = profileURL;
     }
 
@@ -51,12 +51,12 @@ public class Creator {
         this.description = description;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getProfileURL() {

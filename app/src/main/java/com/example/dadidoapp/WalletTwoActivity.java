@@ -53,6 +53,7 @@ public class WalletTwoActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Adding Fund wallet");
 
         totalFunds = (TextInputLayout) findViewById(R.id.textInputLayoutMoney);
         buttonDeposit = (Button) findViewById(R.id.buttonDeposit);
