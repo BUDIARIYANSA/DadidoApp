@@ -95,6 +95,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent2);
                 finish();
                 return true;
+            case R.id.mWallet:
+                startActivity(new Intent(HomeActivity.this, WalletActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
