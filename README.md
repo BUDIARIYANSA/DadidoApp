@@ -1,4 +1,6 @@
 # DadidoApp
+Dadido App is an android application. Its task is only buy and sell NFT inside them. Can Register new account, create your own collection (One account only had one Collection). This app can also, adding funds (even the funds still localy). Find other people Item using search. Log Out and more.
+
 Our Team on this Project :
 - Daniel Christian (672019031)
 - Leonardo Ade Pradana Putra (672019142)
