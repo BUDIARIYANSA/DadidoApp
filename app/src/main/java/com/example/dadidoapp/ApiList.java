@@ -28,6 +28,9 @@ public interface ApiList {
     Call<ArrayList<Item>> newItem(@Body RequestBody body);
 
     @POST("webservice.php")
+    Call<ArrayList<Item>> itemCollection(@Body RequestBody body);
+
+    @POST("webservice.php")
     Call<ArrayList<Item>> mostExpensive(@Body RequestBody body);
 
     @POST("webservice.php")
