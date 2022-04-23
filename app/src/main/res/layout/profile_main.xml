@@ -8,57 +8,62 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="50dp"
+                android:padding="5dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/cicular"
                 app:srcCompat="@drawable/empty"
+                app:strokeColor="@color/leaf_green"
+                app:strokeWidth="5dp"
                 tools:ignore="MissingClass" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutUsername"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:hint="Username"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:helperTextTextColor="@color/red"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageProfile">
+                app:layout_constraintTop_toBottomOf="@+id/buttonChangeProfile">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputEditText_username"
-                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:fontFamily="@font/poppinsregular" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -66,17 +71,17 @@
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:hint="Email"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:helperText="*Required"
-                app:helperTextTextColor="@color/red"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
                 app:endIconMode="clear_text"
+                app:helperText="*Required"
+                app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername">
@@ -90,8 +95,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutFullmame"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -99,17 +104,17 @@
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:hint="Full Name"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:helperText="*Required"
-                app:helperTextTextColor="@color/red"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
                 app:endIconMode="clear_text"
+                app:helperText="*Required"
+                app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
@@ -123,25 +128,24 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutHomeAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="20dp"
                 android:ems="10"
                 android:hint="Home Address"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
                 app:endIconMode="clear_text"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton_location"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullmame">
 
@@ -154,8 +158,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutOldPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -163,17 +167,17 @@
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:hint="Old Password"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:helperText="*Required"
-                app:helperTextTextColor="@color/red"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:counterMaxLength="20"
                 app:endIconMode="password_toggle"
+                app:helperText="*Required"
+                app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutHomeAddress">
@@ -182,14 +186,14 @@
                     android:id="@+id/textInputEditText_OldPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/poppinsregular" />
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutNewPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -197,17 +201,17 @@
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:hint="New Password"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:helperText="*Required"
-                app:helperTextTextColor="@color/red"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:counterMaxLength="20"
                 app:endIconMode="password_toggle"
+                app:helperText="*Required"
+                app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutOldPassword">
@@ -216,14 +220,14 @@
                     android:id="@+id/textInputEditText_NewPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/poppinsregular" />
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/textInputLayoutConfirmNewPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -231,17 +235,17 @@
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:hint="Confirm New Password"
-                android:textColorHint="@color/leaf_green"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/leaf_green"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:helperText="*Required"
-                app:helperTextTextColor="@color/red"
+                app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
                 app:counterMaxLength="20"
                 app:endIconMode="password_toggle"
+                app:helperText="*Required"
+                app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/leaf_green"
-                app:boxStrokeColor="@color/leaf_green"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNewPassword">
@@ -250,8 +254,8 @@
                     android:id="@+id/textInputEditText_ConfirmNewPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/poppinsregular" />
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -271,6 +275,34 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConfirmNewPassword" />
+
+            <Button
+                android:id="@+id/buttonChangeProfile"
+                android:layout_width="211dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/leaf_green"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Change Profile Picture"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageProfile" />
+
+            <ImageButton
+                android:id="@+id/imageButton_location"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="28dp"
+                android:background="@color/leaf_green"
+                android:cropToPadding="false"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFullmame"
+                app:srcCompat="@drawable/ic_baseline_add_location_alt_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

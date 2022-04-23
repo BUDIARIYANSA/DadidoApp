@@ -41,6 +41,7 @@ public class CreateCollectionActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Create Your New Collection");
 
         Uploud_Btn=(Button)findViewById(R.id.UploadBtn);
         img=(ImageView)findViewById(R.id.img);

@@ -111,28 +111,6 @@ public class DetailCollectionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        btn_add_new_item = (Button) findViewById(R.id.buttonToCreateItem);
-        btn_add_new_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent1 = new Intent(DetailCollectionActivity.this, CreateItemActivity.class);
-                startActivity(intent1);
-
-            }
-        });
-
-        sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        editor=sharedPreferences.edit();
-        String str_username = getPreference(DetailCollectionActivity.this, "username");
-        if(str_username.equals(str_creator_name)){
-            btn_add_new_item.setVisibility(View.VISIBLE);
-            btn_add_new_item.setEnabled(true);
-        }else{
-            btn_add_new_item.setVisibility(View.INVISIBLE);
-            btn_add_new_item.setEnabled(false);
-        }
-
-
     }
 
     void addData(){
@@ -153,33 +131,6 @@ public class DetailCollectionActivity extends AppCompatActivity {
     public static String getPreference(Context context, String key) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return settings.getString(key, "");
-    }
-
-    public void dataCollection() {
-        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
-        String str_username = getPreference(DetailCollectionActivity.this, "username");
-        String str_password = getPreference(DetailCollectionActivity.this, "password");
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("CMD", "collection_by_username")
-                .addFormDataPart("username",str_username)
-                .addFormDataPart("password",str_password)
-                .build();
-        Call<ArrayList<Creator>> call = apiList.cardCreator(requestBody);
-        call.enqueue(new Callback<ArrayList<Creator>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Creator>> call, Response<ArrayList<Creator>> response) {
-                if (response.isSuccessful()) {
-                    ArrayList<Creator> data = response.body();
-                    System.out.println(data.get(1).getUsername());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Creator>> call, Throwable t) {
-
-            }
-        });
     }
 
 }

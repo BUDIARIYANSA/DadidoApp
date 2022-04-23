@@ -39,7 +39,7 @@ public class CreateItemActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Create Item");
+        actionBar.setTitle("Create New Item");
 
         Uploud_Btn = (Button)findViewById(R.id.UploadBtn);
         img = (ImageView)findViewById(R.id.img);

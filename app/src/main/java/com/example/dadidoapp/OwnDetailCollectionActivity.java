@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
+import com.example.dadidoapp.LayoutModel.Card_Creator_model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.Model.Creator;
 import com.squareup.picasso.Picasso;
@@ -43,8 +44,6 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     private TextView description;
     private Button buttonToCreateItem;
 
-    private Button btn_add_new_item;
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -64,7 +63,7 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_collection);
+        setContentView(R.layout.activity_own_detail_collection);
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -74,8 +73,18 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("My Own Collection");
+
+        buttonToCreateItem = (Button) findViewById(R.id.buttonToCreateItem);
+        buttonToCreateItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class));
+            }
+        });
 
         addData();
+        dataCollection();
     }
 
     void addData(){
@@ -96,6 +105,46 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     public static String getPreference(Context context, String key) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return settings.getString(key, "");
+    }
+
+    public void dataCollection() {
+        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String str_username = getPreference(OwnDetailCollectionActivity.this, "username");
+        String str_password = getPreference(OwnDetailCollectionActivity.this, "password");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "collection_by_username")
+                .addFormDataPart("username",str_username)
+                .addFormDataPart("password",str_password)
+                .build();
+        Call<ArrayList<Creator>> call = apiList.cardCreator(requestBody);
+        call.enqueue(new Callback<ArrayList<Creator>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Creator>> call, Response<ArrayList<Creator>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Creator> data = response.body();
+                    creator_name = (TextView) findViewById(R.id.textViewCreatorNameDetail);
+                    collection_name = (TextView) findViewById(R.id.textViewCollectionNameDetail);
+                    description = (TextView) findViewById(R.id.textView8);
+                    imgbanner = (ImageView) findViewById(R.id.imageViewCBanner);
+                    imgProfil = (ImageView) findViewById(R.id.imageViewProfileCreator2);
+
+                    for (int i = 0; i < data.size(); i++) {
+                        creator_name.setText(data.get(i).getUsername());
+                        collection_name.setText(data.get(i).getCollectionName());
+                        description.setText(data.get(i).getDescription());
+                        Picasso.get().load(data.get(i).getImageBanner()).into(imgbanner);
+                        Picasso.get().load(data.get(i).getProfileURL()).into(imgProfil);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Creator>> call, Throwable t) {
+
+            }
+        });
     }
 
 }
