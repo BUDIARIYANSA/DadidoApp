@@ -52,7 +52,7 @@ public class DetailCollectionActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     private static final String PREFS_NAME = "LoginPrefs";
-    private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
@@ -68,7 +68,6 @@ public class DetailCollectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_collection);
-
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
 
@@ -154,6 +153,33 @@ public class DetailCollectionActivity extends AppCompatActivity {
     public static String getPreference(Context context, String key) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return settings.getString(key, "");
+    }
+
+    public void dataCollection() {
+        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String str_username = getPreference(DetailCollectionActivity.this, "username");
+        String str_password = getPreference(DetailCollectionActivity.this, "password");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "collection_by_username")
+                .addFormDataPart("username",str_username)
+                .addFormDataPart("password",str_password)
+                .build();
+        Call<ArrayList<Creator>> call = apiList.cardCreator(requestBody);
+        call.enqueue(new Callback<ArrayList<Creator>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Creator>> call, Response<ArrayList<Creator>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Creator> data = response.body();
+                    System.out.println(data.get(1).getUsername());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Creator>> call, Throwable t) {
+
+            }
+        });
     }
 
 }
