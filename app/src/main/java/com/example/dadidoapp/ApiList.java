@@ -22,6 +22,9 @@ public interface ApiList {
     Call<Object> register(@Body RequestBody body);
 
     @POST("webservice.php")
+    Call<ArrayList<Item>> favorite(@Body RequestBody body);
+
+    @POST("webservice.php")
     Call<ArrayList<Item>> newItem(@Body RequestBody body);
 
     @POST("webservice.php")
