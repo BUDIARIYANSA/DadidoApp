@@ -14,7 +14,7 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity_item"
+            android:name=".card_history_item"
             android:exported="false" />
         <activity
             android:name=".WalletActivity"
