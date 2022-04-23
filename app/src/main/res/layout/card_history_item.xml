@@ -9,7 +9,7 @@
     android:layout_margin="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/card_model_favorite">
+    android:id="@+id/card_model_history">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
