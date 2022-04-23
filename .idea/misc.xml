@@ -35,6 +35,8 @@
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_register.xml" value="0.23052536231884058" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_sale_page.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_search_suggestion.xml" value="0.3625" />
+        <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.3625" />
+        <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_trending_page.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_wallet.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_wallet2.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_wallet_two.xml" value="0.3625" />
@@ -50,7 +52,7 @@
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/drawable/black_rectangle_rounded_corner.xml" value="0.1955" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/drawable/button_capsule_shape.xml" value="0.145" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/drawable/imageview_rounded_corners.xml" value="0.255" />
-        <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_detail_collection.xml" value="0.176" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_detail_collection.xml" value="0.46647230320699706" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_detail_item.xml" value="0.4" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_favorit.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_home.xml" value="0.2" />
@@ -58,13 +60,9 @@
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_most_expensive.xml" value="0.264" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_new_page.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_own_detail_collection.xml" value="0.264" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_toolbar_home.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_trending_page.xml" value="0.41702867072111205" />
-        <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_wallet.xml" value="0.152" />
-        <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/activity_wallet_two.xml" value="0.264" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/cardcreator.xml" value="0.4" />
-        <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/cardfavorite.xml" value="0.4" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/carditem_one.xml" value="0.4" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/carditem_two.xml" value="0.176" />
         <entry key="..\:/Users/danie/AndroidStudioProjects/DadidoApp/app/src/main/res/layout/layout_new_page.xml" value="0.22826086956521738" />
