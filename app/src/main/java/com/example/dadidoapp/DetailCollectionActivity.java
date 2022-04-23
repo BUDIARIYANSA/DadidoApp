@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
@@ -17,11 +18,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dadidoapp.Adapter.CardCreator_adapter;
 import com.example.dadidoapp.Adapter.cardItem_adapter;
+import com.example.dadidoapp.LayoutModel.Card_Creator_model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.Model.Creator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailCollectionActivity extends AppCompatActivity {
 
@@ -40,6 +50,9 @@ public class DetailCollectionActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+
+    private static final String PREFS_NAME = "LoginPrefs";
+    private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
@@ -71,13 +84,6 @@ public class DetailCollectionActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.textView8);
         imgProfil = (ImageView) findViewById(R.id.imageViewProfileCreator2);
         imgbanner = (ImageView) findViewById(R.id.imageViewCBanner);
-        buttonToCreateItem = (Button) findViewById(R.id.buttonToCreateItem);
-        buttonToCreateItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DetailCollectionActivity.this, CreateItemActivity.class));
-            }
-        });
 
         Intent intent = getIntent();
         String str_coll_name = intent.getStringExtra("collection_title");
@@ -110,7 +116,7 @@ public class DetailCollectionActivity extends AppCompatActivity {
         btn_add_new_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(DetailCollectionActivity.this, DetailItemActivity.class);
+                Intent intent1 = new Intent(DetailCollectionActivity.this, CreateItemActivity.class);
                 startActivity(intent1);
 
             }
@@ -118,8 +124,8 @@ public class DetailCollectionActivity extends AppCompatActivity {
 
         sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         editor=sharedPreferences.edit();
-        String username=sharedPreferences.getString("username","");
-        if(username==str_creator_name){
+        String str_username = getPreference(DetailCollectionActivity.this, "username");
+        if(str_username.equals(str_creator_name)){
             btn_add_new_item.setVisibility(View.VISIBLE);
             btn_add_new_item.setEnabled(true);
         }else{
@@ -138,4 +144,16 @@ public class DetailCollectionActivity extends AppCompatActivity {
         Card_Item_ArrayList.add(new Card_Item_Model("Gambar 4", "1214378098", "4", "500","https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
         Card_Item_ArrayList.add(new Card_Item_Model("Gambar 5", "1214378098", "5", "500","https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
     }
+    public static boolean setPreference(Context context, String key, String value) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(key, value);
+        return editor.commit();
+    }
+
+    public static String getPreference(Context context, String key) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getString(key, "");
+    }
+
 }

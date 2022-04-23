@@ -62,6 +62,7 @@ public class WalletActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Wallet");
 
         totalFunds = (TextView) findViewById(R.id.totalFunds);
 
