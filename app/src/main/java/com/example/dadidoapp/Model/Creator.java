@@ -13,18 +13,22 @@ public class Creator {
     @SerializedName("description")
     String description;
 
-    @SerializedName("fullname")
-    String fullName;
+    @SerializedName("username")
+    String username;
 
     @SerializedName("profile_url")
     String profileURL;
 
-    public Creator(String collectionName, String imageBanner, String description, String fullName, String profileURL) {
+    @SerializedName("min_price")
+    String cheapestPrice;
+
+    public Creator(String collectionName, String imageBanner, String description, String username, String profileURL, String cheapestPrice) {
         this.collectionName = collectionName;
         this.imageBanner = imageBanner;
         this.description = description;
-        this.fullName = fullName;
+        this.username = username;
         this.profileURL = profileURL;
+        this.cheapestPrice = cheapestPrice;
     }
 
     public String getCollectionName() {
@@ -51,12 +55,12 @@ public class Creator {
         this.description = description;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getProfileURL() {
@@ -65,5 +69,13 @@ public class Creator {
 
     public void setProfileURL(String profileURL) {
         this.profileURL = profileURL;
+    }
+
+    public String getCheapestPrice() {
+        return cheapestPrice;
+    }
+
+    public void setCheapestPrice(String cheapestPrice) {
+        this.cheapestPrice = cheapestPrice;
     }
 }

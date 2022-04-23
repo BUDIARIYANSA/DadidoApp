@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,16 +19,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.dadidoapp.Adapter.CardFavorite_adapter;
-import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.Model.Item;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FavoritActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -35,9 +44,12 @@ public class FavoritActivity extends AppCompatActivity {
     private CardFavorite_adapter adapter;
     FloatingActionButton mCollection;
     private ArrayList<Card_Favorite_Model> Card_Favorite_ArrayList;
+    private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+
+    private static final String PREFS_NAME = "LoginPrefs";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,12 +101,9 @@ public class FavoritActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.mLogout:
-                sharedPreferences=getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-                editor=sharedPreferences.edit();
-                editor.putString("username","");
-                editor.putString("password","");
-                editor.putString("remember","");
-                editor.commit();
+                setPreference(getApplicationContext(), "username", "");
+                setPreference(getApplicationContext(), "password", "");
+                setPreference(getApplicationContext(), "remember", "");
                 Intent intent2 = new Intent(FavoritActivity.this, MainActivity.class);
                 startActivity(intent2);
                 finish();
@@ -139,28 +148,104 @@ public class FavoritActivity extends AppCompatActivity {
         mCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(FavoritActivity.this, DetailCollectionActivity.class));
+                ViewSwitching();
             }
         });
 
-        addData();
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_favorite);
-
-        adapter = new CardFavorite_adapter(Card_Favorite_ArrayList,FavoritActivity.this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FavoritActivity.this, LinearLayoutManager.VERTICAL,false);
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);
+        getData();
     }
 
-    void addData(){
-        Card_Favorite_ArrayList = new ArrayList<>();
-        Card_Favorite_ArrayList.add(new Card_Favorite_Model("Gambar 1", "Hizkia Agung Purnama", "https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
-        Card_Favorite_ArrayList.add(new Card_Favorite_Model("Gambar 2", "Andreas Jantu", "https://i.pinimg.com/736x/9d/22/c6/9d22c6839b684d30075ab1ae321ef058.jpg"));
-        Card_Favorite_ArrayList.add(new Card_Favorite_Model("Gambar 3", "Daniel Ariyansa", "https://media.raritysniper.com/azuki/3309-600.webp?cacheId=2"));
-        Card_Favorite_ArrayList.add(new Card_Favorite_Model("Gambar 4", "Muhammad Iqbal", "https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
-        Card_Favorite_ArrayList.add(new Card_Favorite_Model("Gambar 5", "Azka Prasetyo", "https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
+    void getData(){
+        String username = getPreference(getApplicationContext(), "username");
+        String password = getPreference(getApplicationContext(), "password");
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "user_fav")
+                .addFormDataPart("username", username)
+                .addFormDataPart("password", password)
+                .build();
+
+        Call<ArrayList<Item>> call = apiList.favorite(requestBody);
+        call.enqueue(new Callback<ArrayList<Item>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                if (response.isSuccessful()){
+                    Card_Favorite_ArrayList = new ArrayList<>();
+                    ArrayList<Item> data = response.body();
+                    for (int i = 0; i < data.size(); i++) {
+                        Card_Favorite_ArrayList.add(new Card_Favorite_Model(data.get(i).getFileName(), data.get(i).getDescription(), data.get(i).getUrl()));
+                    }
+
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_favorite);
+
+                    adapter = new CardFavorite_adapter(Card_Favorite_ArrayList,FavoritActivity.this);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FavoritActivity.this, LinearLayoutManager.VERTICAL,false);
+                    //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(FavoritActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
+                Toast.makeText(FavoritActivity.this, "Error : " + t, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    public static boolean setPreference(Context context, String key, String value) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(key, value);
+        return editor.commit();
+    }
+
+    public static String getPreference(Context context, String key) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getString(key, "");
+    }
+
+    public void ViewSwitching() {
+        ApiList apis = RetrofitClient.getRetrofitClient().create(ApiList.class);
+
+        String str_username = getPreference(FavoritActivity.this, "username");
+        String str_password = getPreference(FavoritActivity.this, "password");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "has_collection")
+                .addFormDataPart("username", str_username)
+                .addFormDataPart("password", str_password)
+                .build();
+
+        Call call = apis.login(requestBody);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()) {
+                    String res = response.body().toString();
+                    if(res.equals("has_collection")) {
+                        Toast.makeText(getApplicationContext(), "has_collection", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(FavoritActivity.this, OwnDetailCollectionActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "no_collection", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(FavoritActivity.this, CreateCollectionActivity.class));
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
     }
 
 }

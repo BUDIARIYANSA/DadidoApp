@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,14 +16,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+import android.widget.Toast;
+
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -34,6 +41,8 @@ public class HomeActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+
+    private static final String PREFS_NAME = "LoginPrefs";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,7 +150,7 @@ public class HomeActivity extends AppCompatActivity {
                 ft.commit();
             }
         });
-        //these transaction still crashes
+
         trending_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +163,7 @@ public class HomeActivity extends AppCompatActivity {
         mCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, DetailCollectionActivity.class));
+                ViewSwitching();
             }
         });
 
@@ -174,8 +183,53 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    public static String getPreference(Context context, String key) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getString(key, "");
+    }
 
+    public static boolean setPreference(Context context, String key, String value) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(key, value);
+        return editor.commit();
+    }
 
+    public void ViewSwitching() {
+        ApiList apis = RetrofitClient.getRetrofitClient().create(ApiList.class);
 
+        String str_username = getPreference(HomeActivity.this, "username");
+        String str_password = getPreference(HomeActivity.this, "password");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "has_collection")
+                .addFormDataPart("username", str_username)
+                .addFormDataPart("password", str_password)
+                .build();
+
+        Call call = apis.login(requestBody);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()) {
+                    String res = response.body().toString();
+                    if(res.equals("has_collection")) {
+                        Toast.makeText(getApplicationContext(), "has_collection", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(HomeActivity.this, OwnDetailCollectionActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "no_collection", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(HomeActivity.this, CreateCollectionActivity.class));
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
     }
 }

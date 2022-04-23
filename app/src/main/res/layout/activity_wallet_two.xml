@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,31 +9,42 @@
         android:id="@+id/texttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/poppinsregular"
         android:text="Input money in IDR"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texttitle4" />
+
+    <TextView
+        android:id="@+id/texttitle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="248dp"
+        android:fontFamily="@font/poppinsregular"
+        android:text="1 dadido = Rp 800 mil"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutMoney"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="351dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textColorHint="@color/leaf_green"
         android:textSize="20sp"
         app:boxStrokeColor="@color/leaf_green"
-        app:counterEnabled="true"
         app:endIconMode="clear_text"
         app:helperTextTextColor="@color/red"
         app:hintTextColor="@color/leaf_green"
@@ -44,7 +56,8 @@
             android:id="@+id/textInputEditText_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppinsregular" />
+            android:fontFamily="@font/poppinsregular"
+            android:hint="Your Fund" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -58,11 +71,19 @@
         android:fontFamily="@font/poppinsregular"
         android:text="Deposit"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMoney"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMoney" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/texttitle4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/daradi_currency" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

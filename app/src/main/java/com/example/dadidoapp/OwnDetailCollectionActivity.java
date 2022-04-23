@@ -1,16 +1,8 @@
 package com.example.dadidoapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dadidoapp.Adapter.CardCreator_adapter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.dadidoapp.Adapter.CardFavorite_adapter;
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Creator_model;
+import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.Model.Creator;
 import com.example.dadidoapp.Model.Item;
@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailCollectionActivity extends AppCompatActivity {
+public class OwnDetailCollectionActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private cardItem_adapter adapter;
@@ -45,12 +45,10 @@ public class DetailCollectionActivity extends AppCompatActivity {
     private TextView collection_name;
     private TextView creator_name;
     private TextView total_follower;
+    private TextView cheapest;
     private TextView description;
     private TextView total_item;
-    private TextView cheapest;
     private Button buttonToCreateItem;
-
-    private Button btn_add_new_item;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -71,7 +69,8 @@ public class DetailCollectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_collection);
+        setContentView(R.layout.activity_own_detail_collection);
+
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
 
@@ -80,16 +79,19 @@ public class DetailCollectionActivity extends AppCompatActivity {
 
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("My Own Collection");
 
-        Intent intent = getIntent();
-        String str_coll_name = intent.getStringExtra("collection_title");
-        String str_creator_name = intent.getStringExtra("creator_name");
+        buttonToCreateItem = (Button) findViewById(R.id.buttonToCreateItem);
+        buttonToCreateItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class));
+            }
+        });
 
-        actionBar.setTitle(str_coll_name);//this is for actionbar
-
-        dataCollection(str_creator_name);
-        Cheapest_item(str_creator_name);
-        getCard(str_creator_name);
+        Cheapest_item();
+        dataCollection();
+        getCard();
 
     }
 
@@ -105,12 +107,13 @@ public class DetailCollectionActivity extends AppCompatActivity {
         return settings.getString(key, "");
     }
 
-    public void dataCollection(String username) {
+    public void dataCollection() {
         ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String str_username = getPreference(OwnDetailCollectionActivity.this, "username");
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("CMD", "collection_by_username")
-                .addFormDataPart("username",username)
+                .addFormDataPart("username",str_username)
                 .build();
         Call<ArrayList<Creator>> call = apiList.cardCreator(requestBody);
         call.enqueue(new Callback<ArrayList<Creator>>() {
@@ -142,13 +145,14 @@ public class DetailCollectionActivity extends AppCompatActivity {
         });
     }
 
-    public void Cheapest_item(String username) {
+    public void Cheapest_item() {
         ApiList apiList2 = RetrofitClient.getRetrofitClient().create(ApiList.class);
-
+        String str_username = getPreference(OwnDetailCollectionActivity.this, "username");
+        String str_password = getPreference(OwnDetailCollectionActivity.this, "password");
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("CMD", "min_price")
-                .addFormDataPart("username",username)
+                .addFormDataPart("username",str_username)
                 .build();
         Call<ArrayList<Creator>> call = apiList2.cardCreator(requestBody);
         call.enqueue(new Callback<ArrayList<Creator>>() {
@@ -172,8 +176,9 @@ public class DetailCollectionActivity extends AppCompatActivity {
         });
     }
 
-    void getCard(String username){
+    void getCard(){
         ApiList apiList3 = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String username = getPreference(getApplicationContext(), "username");
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -198,21 +203,21 @@ public class DetailCollectionActivity extends AppCompatActivity {
 
                     total_item.setText(String.valueOf(data.size()));
 
-                    adapter = new cardItem_adapter(Card_Item_ArrayList,DetailCollectionActivity.this);
+                    adapter = new cardItem_adapter(Card_Item_ArrayList,OwnDetailCollectionActivity.this);
 
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailCollectionActivity.this);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailCollectionActivity.this, 2, GridLayoutManager.VERTICAL, false);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(OwnDetailCollectionActivity.this);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(OwnDetailCollectionActivity.this, 2, GridLayoutManager.VERTICAL, false);
 
                     recyclerView.setLayoutManager(gridLayoutManager);
                     recyclerView.setAdapter(adapter);
                 } else {
-                    Toast.makeText(DetailCollectionActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OwnDetailCollectionActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
-                Toast.makeText(DetailCollectionActivity.this, "Error : " + t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(OwnDetailCollectionActivity.this, "Error : " + t, Toast.LENGTH_SHORT).show();
             }
         });
 

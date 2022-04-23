@@ -5,14 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/texttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="146dp"
-        android:layout_marginTop="244dp"
-        android:layout_marginEnd="142dp"
+        android:layout_marginTop="300dp"
         android:fontFamily="@font/poppinsregular"
         android:text="Total Balance"
         android:textAlignment="center"
@@ -25,27 +22,25 @@
         android:id="@+id/imageButton2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="100dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="5dp"
         android:background="@null"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/totalFunds"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texttitle"
-        app:srcCompat="@drawable/daradi_currency"/>
+        app:srcCompat="@drawable/daradi_currency" />
 
     <TextView
         android:id="@+id/totalFunds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="128dp"
         android:fontFamily="@font/poppins_bold"
         android:text="0.00 DADIDO"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texttitle" />
 
     <Button
@@ -59,11 +54,9 @@
         android:fontFamily="@font/poppinsregular"
         android:text="Add Funds"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalFunds"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/totalFunds" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
