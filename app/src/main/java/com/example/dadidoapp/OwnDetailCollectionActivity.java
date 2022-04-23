@@ -15,12 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dadidoapp.Adapter.CardFavorite_adapter;
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Creator_model;
+import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.Model.Creator;
+import com.example.dadidoapp.Model.Item;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,7 +45,9 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     private TextView collection_name;
     private TextView creator_name;
     private TextView total_follower;
+    private TextView cheapest;
     private TextView description;
+    private TextView total_item;
     private Button buttonToCreateItem;
 
     SharedPreferences sharedPreferences;
@@ -83,18 +89,12 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
             }
         });
 
-        addData();
+        Cheapest_item();
         dataCollection();
+        getCard();
+
     }
 
-    void addData(){
-        Card_Item_ArrayList = new ArrayList<>();
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 1", "1414370309", "5.0","8","https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 2", "1214234560", "0.7","9","https://i.pinimg.com/736x/9d/22/c6/9d22c6839b684d30075ab1ae321ef058.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 3", "1214230345", "0.9", "200","https://media.raritysniper.com/azuki/3309-600.webp?cacheId=2"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 4", "1214378098", "4", "500","https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 5", "1214378098", "5", "500","https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
-    }
     public static boolean setPreference(Context context, String key, String value) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -110,12 +110,10 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     public void dataCollection() {
         ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
         String str_username = getPreference(OwnDetailCollectionActivity.this, "username");
-        String str_password = getPreference(OwnDetailCollectionActivity.this, "password");
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("CMD", "collection_by_username")
                 .addFormDataPart("username",str_username)
-                .addFormDataPart("password",str_password)
                 .build();
         Call<ArrayList<Creator>> call = apiList.cardCreator(requestBody);
         call.enqueue(new Callback<ArrayList<Creator>>() {
@@ -145,6 +143,85 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void Cheapest_item() {
+        ApiList apiList2 = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String str_username = getPreference(OwnDetailCollectionActivity.this, "username");
+        String str_password = getPreference(OwnDetailCollectionActivity.this, "password");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "min_price")
+                .addFormDataPart("username",str_username)
+                .build();
+        Call<ArrayList<Creator>> call = apiList2.cardCreator(requestBody);
+        call.enqueue(new Callback<ArrayList<Creator>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Creator>> call, Response<ArrayList<Creator>> response) {
+                if (response.isSuccessful()) {
+                    ArrayList<Creator> data = response.body();
+                    cheapest = (TextView) findViewById(R.id.textViewCheapestPrice);
+
+                    for (int i = 0; i < data.size(); i++) {
+                        cheapest.setText(data.get(i).getCheapestPrice());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Creator>> call, Throwable t) {
+                System.out.println(t);
+            }
+        });
+    }
+
+    void getCard(){
+        ApiList apiList3 = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String username = getPreference(getApplicationContext(), "username");
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "item_by_username")
+                .addFormDataPart("username", username)
+                .build();
+
+        Call<ArrayList<Item>> call = apiList3.newItem(requestBody);
+        call.enqueue(new Callback<ArrayList<Item>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                if(response.isSuccessful()) {
+                    ArrayList<Item> data = response.body();
+                    Card_Item_ArrayList = new ArrayList<>();
+                    for (int i = 0; i < data.size(); i++) {
+                        Card_Item_ArrayList.add(new Card_Item_Model(data.get(i).getFileName(),
+                                data.get(i).getId().toString(), data.get(i).getPrice().toString(), "100", data.get(i).getUrl()));
+
+                    }
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                    total_item = (TextView) findViewById(R.id.textViewTotalItemsInCollection);
+
+                    total_item.setText(String.valueOf(data.size()));
+
+                    adapter = new cardItem_adapter(Card_Item_ArrayList,OwnDetailCollectionActivity.this);
+
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(OwnDetailCollectionActivity.this);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(OwnDetailCollectionActivity.this, 2, GridLayoutManager.VERTICAL, false);
+
+                    recyclerView.setLayoutManager(gridLayoutManager);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(OwnDetailCollectionActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
+                Toast.makeText(OwnDetailCollectionActivity.this, "Error : " + t, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
 }
