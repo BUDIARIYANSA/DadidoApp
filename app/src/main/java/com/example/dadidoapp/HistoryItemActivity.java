@@ -49,11 +49,11 @@ public class HistoryItemActivity extends AppCompatActivity {
         actionBar.setTitle("History Item");//this is for actionbar
 
         addData();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_history);
 
         adapter = new CardHistory_adapter(Card_History_ArrayList,HistoryItemActivity.this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(HistoryItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(HistoryItemActivity.this, LinearLayoutManager.VERTICAL,false);
+        // GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
@@ -62,7 +62,7 @@ public class HistoryItemActivity extends AppCompatActivity {
     void addData(){
         Card_History_ArrayList = new ArrayList<>();
         Card_History_ArrayList.add(new Card_History_Model("Sale", "0.7 Dadido Coin", "Budi Ariyansa","Leonardo Ade","7 Januari 2022"));
-        Card_History_ArrayList.add(new Card_History_Model("Tranfer", " ", "Budi Ariyansa","Leonardo Ade","7 Januari 2022"));
+        Card_History_ArrayList.add(new Card_History_Model("Transfer", " ", "Budi Ariyansa","Leonardo Ade","7 Januari 2022"));
         Card_History_ArrayList.add(new Card_History_Model("Mounted", " ", "Null", "Budi Ariyansa","5 Januari 2022"));
     }
 }

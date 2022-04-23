@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
+
+    private Button button_item_activity;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
@@ -84,6 +88,18 @@ public class DetailItemActivity extends AppCompatActivity {
         description.setText(str_creatorName);
 
         Picasso.get().load(str_ImageUrl).into(imgview);
+
+        button_item_activity = (Button) findViewById(R.id.button_item_activity);
+
+        button_item_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(DetailItemActivity.this,HistoryItemActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         //below this call lists of cards
