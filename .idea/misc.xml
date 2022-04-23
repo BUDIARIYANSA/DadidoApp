@@ -27,6 +27,7 @@
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_detail_item.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_favorit.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_home.xml" value="0.3625" />
+        <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_item.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_most_expensive.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_new_page.xml" value="0.3625" />
@@ -38,7 +39,7 @@
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_wallet2.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/activity_wallet_two.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/cardcreator.xml" value="0.3625" />
-        <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/cardfavorite.xml" value="1.0" />
+        <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/cardfavorite.xml" value="0.4532304725168756" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/carditem_one.xml" value="0.2128623188405797" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/carditem_two.xml" value="0.3625" />
         <entry key="..\:/Users/ASUS/Videos/Project PAM/DadidoApp/app/src/main/res/layout/create_collection_main.xml" value="0.33" />
@@ -71,7 +72,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
