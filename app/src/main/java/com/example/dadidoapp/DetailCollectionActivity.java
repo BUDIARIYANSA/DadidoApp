@@ -49,7 +49,6 @@ public class DetailCollectionActivity extends AppCompatActivity {
     private TextView total_item;
     private TextView cheapest;
     private Button buttonToCreateItem;
-
     private Button btn_add_new_item;
 
     SharedPreferences sharedPreferences;
@@ -91,18 +90,6 @@ public class DetailCollectionActivity extends AppCompatActivity {
         Cheapest_item(str_creator_name);
         getCard(str_creator_name);
 
-    }
-
-    public static boolean setPreference(Context context, String key, String value) {
-        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(key, value);
-        return editor.commit();
-    }
-
-    public static String getPreference(Context context, String key) {
-        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return settings.getString(key, "");
     }
 
     public void dataCollection(String username) {
