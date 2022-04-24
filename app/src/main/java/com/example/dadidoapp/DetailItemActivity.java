@@ -6,18 +6,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.Model.Item;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailItemActivity extends AppCompatActivity {
 
@@ -34,6 +45,9 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
+    private Button button_item_activity;
+    private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+    private static final String PREFS_NAME = "LoginPrefs";
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
@@ -82,28 +96,62 @@ public class DetailItemActivity extends AppCompatActivity {
         total_price.setText(str_TotalPrice);
         total_fav.setText(str_TotalLike);
         description.setText(str_creatorName);
-
         Picasso.get().load(str_ImageUrl).into(imgview);
+
+        button_item_activity = (Button) findViewById(R.id.button_item_activity);
+
+        button_item_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(DetailItemActivity.this,HistoryItemActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         //below this call lists of cards
-        addData();
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
-
-        adapter = new cardItem_adapter(Card_Item_ArrayList,DetailItemActivity.this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);
+        getData();
     }
 
-    void addData(){
-        Card_Item_ArrayList = new ArrayList<>();
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 1", "1414370309", "5.0","8","https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 2", "1214234560", "0.7","9","https://i.pinimg.com/736x/9d/22/c6/9d22c6839b684d30075ab1ae321ef058.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 3", "1214230345", "0.9", "200","https://media.raritysniper.com/azuki/3309-600.webp?cacheId=2"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 4", "1214378098", "4", "500","https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 5", "1214378098", "5", "500","https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
+    void getData(){
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("TokenId");
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "get_detail_item")
+                .addFormDataPart("id", id)
+                .build();
+
+        Call<ArrayList<Item>> call = apiList.itemById(requestBody);
+        call.enqueue(new Callback<ArrayList<Item>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                if (response.isSuccessful()) {
+                    Card_Item_ArrayList = new ArrayList<>();
+                    ArrayList<Item> data = response.body();
+
+                    for (int i = 0; i < data.size(); i++) {
+                        Card_Item_ArrayList.add(new Card_Item_Model(data.get(i).getFileName(), data.get(i).getId().toString(), data.get(i).getPrice().toString(),"8",data.get(i).getUrl()));
+                    }
+
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
+
+                    adapter = new cardItem_adapter(Card_Item_ArrayList,DetailItemActivity.this);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
+                    //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
+
+            }
+        });
     }
 }

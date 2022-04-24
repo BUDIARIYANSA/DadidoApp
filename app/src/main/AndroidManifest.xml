@@ -14,20 +14,20 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".OwnDetailCollectionActivity"
-            android:exported="false"/>
+            android:name=".HistoryItemActivity"
+            android:exported="false" />
         <activity
             android:name=".WalletActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".WalletTwoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".CreateCollectionActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".CreateItemActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".SearchSuggestionActivity"
             android:exported="false" />
@@ -45,7 +45,7 @@
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SplashScreen"
             android:exported="true"

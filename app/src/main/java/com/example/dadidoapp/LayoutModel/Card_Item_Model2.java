@@ -9,13 +9,23 @@ public class Card_Item_Model2 {
     private String creator_name;
     private String item_price;
     private String ImageURL;
+    private String tokenId;
 
-    public Card_Item_Model2(String judul_item, String Top_number, String creator_name, String item_price, String ImageURL){
+    public Card_Item_Model2(String tokenId, String judul_item, String Top_number, String creator_name, String item_price, String ImageURL){
         this.judul_item = judul_item;
         this.Top_number = Top_number;
         this.creator_name = creator_name;
         this.item_price = item_price;
         this.ImageURL = ImageURL;
+        this.tokenId = tokenId;
+    }
+
+    public String getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(String tokenId) {
+        this.tokenId = tokenId;
     }
 
     public String getJudul_item() {

@@ -82,7 +82,7 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
                     Intent intent = new Intent(card.getContext(), DetailItemActivity.class);
 
                     intent.putExtra("image_title", dataItem.getJudul_item());
-                    //intent.putExtra("TokenId", txtTokenId.getText().toString().trim());
+                    intent.putExtra("TokenId", dataItem.getTokenId());
                     intent.putExtra("creator_name", dataItem.getCreator_name());
                     intent.putExtra("TotalPrice", dataItem.getItem_price());
                     intent.putExtra("image_url", dataItem.getImageURL());
