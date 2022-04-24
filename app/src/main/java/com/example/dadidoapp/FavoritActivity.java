@@ -22,10 +22,10 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.dadidoapp.Adapter.CardFavorite_adapter;
-import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.Model.Item;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
@@ -148,7 +148,7 @@ public class FavoritActivity extends AppCompatActivity {
         mCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(FavoritActivity.this, DetailCollectionActivity.class));
+                ViewSwitching();
             }
         });
 
@@ -209,6 +209,43 @@ public class FavoritActivity extends AppCompatActivity {
     public static String getPreference(Context context, String key) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return settings.getString(key, "");
+    }
+
+    public void ViewSwitching() {
+        ApiList apis = RetrofitClient.getRetrofitClient().create(ApiList.class);
+
+        String str_username = getPreference(FavoritActivity.this, "username");
+        String str_password = getPreference(FavoritActivity.this, "password");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "has_collection")
+                .addFormDataPart("username", str_username)
+                .addFormDataPart("password", str_password)
+                .build();
+
+        Call call = apis.login(requestBody);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()) {
+                    String res = response.body().toString();
+                    if(res.equals("has_collection")) {
+                        Toast.makeText(getApplicationContext(), "has_collection", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(FavoritActivity.this, OwnDetailCollectionActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "no_collection", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(FavoritActivity.this, CreateCollectionActivity.class));
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
     }
 
 }

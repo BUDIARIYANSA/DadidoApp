@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
+
+    private Button button_item_activity;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
@@ -82,8 +86,19 @@ public class DetailItemActivity extends AppCompatActivity {
         total_price.setText(str_TotalPrice);
         total_fav.setText(str_TotalLike);
         description.setText(str_creatorName);
-
         Picasso.get().load(str_ImageUrl).into(imgview);
+
+        button_item_activity = (Button) findViewById(R.id.button_item_activity);
+
+        button_item_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(DetailItemActivity.this,HistoryItemActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         //below this call lists of cards
@@ -99,11 +114,8 @@ public class DetailItemActivity extends AppCompatActivity {
     }
 
     void addData(){
+
         Card_Item_ArrayList = new ArrayList<>();
         Card_Item_ArrayList.add(new Card_Item_Model("Gambar 1", "1414370309", "5.0","8","https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 2", "1214234560", "0.7","9","https://i.pinimg.com/736x/9d/22/c6/9d22c6839b684d30075ab1ae321ef058.jpg"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 3", "1214230345", "0.9", "200","https://media.raritysniper.com/azuki/3309-600.webp?cacheId=2"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 4", "1214378098", "4", "500","https://lh3.googleusercontent.com/QA8lHQmySHMAL8K9aXetIAlZT0WBtVG7tPQR7u8uWeeFnBqsCAe_c5hok0MGRKpAqTRnzYTHiLzVcwDOvP6Q4tEfXzVZJLtvdmVzvz8=w1400-k"));
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 5", "1214378098", "5", "500","https://i.pinimg.com/736x/98/64/74/986474493cc4ffac916d651659e1f6a7.jpg"));
     }
 }
