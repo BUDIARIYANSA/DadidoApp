@@ -18,7 +18,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Uploud Image for New Item"
+            android:text="Upload Image for New Item"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -84,7 +84,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint="File Name"
             android:inputType="textPersonName"
             android:textColorHint="@color/leaf_green"
             android:textSize="20sp"
@@ -101,7 +101,7 @@
             app:layout_constraintTop_toBottomOf="@+id/UploadBtn">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditText_username"
+                android:id="@+id/textInputEditText_file_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppinsregular" />
@@ -118,7 +118,7 @@
             android:layout_marginEnd="30dp"
 
             android:ems="10"
-            android:hint="Description"
+            android:hint="Description About Item"
             android:inputType="textPersonName"
             android:textColorHint="@color/leaf_green"
             android:textSize="20sp"

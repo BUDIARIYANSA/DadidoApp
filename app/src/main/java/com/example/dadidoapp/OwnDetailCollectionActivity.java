@@ -50,8 +50,11 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     private TextView total_item;
     private Button buttonToCreateItem;
 
+    private String str_collection_name;
+
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+
 
     private static final String PREFS_NAME = "LoginPrefs";
 
@@ -85,7 +88,9 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
         buttonToCreateItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class));
+                Intent intent = new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class);
+                startActivity(intent);
+                intent.putExtra("Collection_name",str_collection_name);
             }
         });
 
@@ -130,6 +135,7 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
                     for (int i = 0; i < data.size(); i++) {
                         creator_name.setText(data.get(i).getUsername());
                         collection_name.setText(data.get(i).getCollectionName());
+                        get_string_coll(data.get(i).getCollectionName());
                         description.setText(data.get(i).getDescription());
                         Picasso.get().load(data.get(i).getImageBanner()).into(imgbanner);
                         Picasso.get().load(data.get(i).getProfileURL()).into(imgProfil);
@@ -222,6 +228,10 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    void get_string_coll(String str){
+        str_collection_name = str;
     }
 
 }
