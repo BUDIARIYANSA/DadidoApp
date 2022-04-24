@@ -28,9 +28,6 @@ public interface ApiList {
     Call<ArrayList<Item>> newItem(@Body RequestBody body);
 
     @POST("webservice.php")
-    Call<ArrayList<Item>> itemCollection(@Body RequestBody body);
-
-    @POST("webservice.php")
     Call<ArrayList<Item>> mostExpensive(@Body RequestBody body);
 
     @POST("webservice.php")
@@ -50,4 +47,7 @@ public interface ApiList {
 
     @POST("webservice.php")
     Call<Object> deposit(@Body RequestBody body);
+
+    @POST("webservice.php")
+    Call<ArrayList<Item>> itemById(@Body RequestBody body);
 }

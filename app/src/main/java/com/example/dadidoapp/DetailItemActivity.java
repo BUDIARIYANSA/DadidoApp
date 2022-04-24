@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,9 +19,16 @@ import android.widget.TextView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.Model.Item;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailItemActivity extends AppCompatActivity {
 
@@ -36,8 +45,9 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
-
     private Button button_item_activity;
+    private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+    private static final String PREFS_NAME = "LoginPrefs";
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
@@ -102,20 +112,46 @@ public class DetailItemActivity extends AppCompatActivity {
 
 
         //below this call lists of cards
-        addData();
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
-
-        adapter = new cardItem_adapter(Card_Item_ArrayList,DetailItemActivity.this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);
+        getData();
     }
 
-    void addData(){
+    void getData(){
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("TokenId");
 
-        Card_Item_ArrayList = new ArrayList<>();
-        Card_Item_ArrayList.add(new Card_Item_Model("Gambar 1", "1414370309", "5.0","8","https://i.pinimg.com/736x/b9/ae/1c/b9ae1c820c0162c268611941084dd614.jpg"));
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "get_detail_item")
+                .addFormDataPart("id", id)
+                .build();
+
+        Call<ArrayList<Item>> call = apiList.itemById(requestBody);
+        call.enqueue(new Callback<ArrayList<Item>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                if (response.isSuccessful()) {
+                    Card_Item_ArrayList = new ArrayList<>();
+                    ArrayList<Item> data = response.body();
+
+                    for (int i = 0; i < data.size(); i++) {
+                        Card_Item_ArrayList.add(new Card_Item_Model(data.get(i).getFileName(), data.get(i).getId().toString(), data.get(i).getPrice().toString(),"8",data.get(i).getUrl()));
+                    }
+
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view4);
+
+                    adapter = new cardItem_adapter(Card_Item_ArrayList,DetailItemActivity.this);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailItemActivity.this, LinearLayoutManager.HORIZONTAL,false);
+                    //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
+
+            }
+        });
     }
 }
