@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class ProfilActivity extends AppCompatActivity {
 
     private ImageView profile_url;
     private Button update;
+    private ImageButton location;
     private TextInputLayout username;
     private TextInputLayout email;
     private TextInputLayout home_address;
@@ -81,6 +83,7 @@ public class ProfilActivity extends AppCompatActivity {
         oldpass = (TextInputLayout) findViewById(R.id.textInputLayoutOldPassword);
         newpass = (TextInputLayout) findViewById(R.id.textInputLayoutNewPassword);
         confirm_newpass = (TextInputLayout) findViewById(R.id.textInputLayoutConfirmNewPassword);
+        location = (ImageButton) findViewById(R.id.imageButton_location);
 
         loadDataProfile();
 
@@ -89,6 +92,14 @@ public class ProfilActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateDataProfile();
+            }
+        });
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
             }
         });
     }

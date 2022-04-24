@@ -1,4 +1,4 @@
-<resources>
+ <resources>
     <string name="app_name">DadidoApp</string>
     <string name="judul_gambar_card">image_title</string>
     <string name="token_id_card">Token_id</string>
