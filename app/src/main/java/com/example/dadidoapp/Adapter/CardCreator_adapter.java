@@ -49,7 +49,6 @@ public class CardCreator_adapter extends RecyclerView.Adapter<CardCreator_adapte
 
         holder.txtCollectionTitle.setText(dataItem.getCollectionTitle());
         holder.txtCreatorName.setText(dataItem.getCreatorName());
-        holder.txtTotalFollower.setText(dataItem.getTotalFollower());
         holder.txtDescription.setText(dataItem.getDescription());
 
         String DPurl = global_var.webURL + dataItem.getCreatorDP_URL();
@@ -73,7 +72,6 @@ public class CardCreator_adapter extends RecyclerView.Adapter<CardCreator_adapte
             super(itemView);
             txtCollectionTitle = (TextView) itemView.findViewById(R.id.textViewCollectionTitle);
             txtCreatorName = (TextView) itemView.findViewById(R.id.textViewCreatorName);
-            txtTotalFollower = (TextView) itemView.findViewById(R.id.textViewFollowerCount);
             txtDescription = (TextView) itemView.findViewById(R.id.textViewCollectionDescription);
             collectionbanner = (ImageView) itemView.findViewById(R.id.imageViewBannerCreator);
             creatordp = (ImageView) itemView.findViewById(R.id.imageViewProfileCreator);
