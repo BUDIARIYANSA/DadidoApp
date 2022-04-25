@@ -25,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.dadidoapp.databinding.ActivityMapsBinding;
 
@@ -38,7 +39,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private Button btn_maps;
     private String location;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +80,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng salatiga = new LatLng(-7.3305, 110.5084 );
             mMap.addMarker(new MarkerOptions().position(salatiga).title("Marker in Salatiga"));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(salatiga, 15.0f));
-
             mMap.setOnMapClickListener(this);
-
     }
 
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
+        mMap.clear();
         mMap.addMarker(new MarkerOptions().position(latLng).title("New Marker"));
-
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
         location = getCompleteAddressString(latLng);
+
     }
 
     private String getCompleteAddressString(LatLng latLng) {

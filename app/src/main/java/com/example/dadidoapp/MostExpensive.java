@@ -65,8 +65,8 @@ public class MostExpensive extends Fragment {
                     ArrayList<Item> data = response.body();
                     Card_Item_ArrayList2 = new ArrayList<>();
                     for (int i = 0; i < data.size(); i++) {
-                        Card_Item_ArrayList2.add(new Card_Item_Model2(data.get(i).getId().toString(), data.get(i).getFileName(),
-                                "#"+(i+1), data.get(i).getDescription(), data.get(i).getPrice().toString(), data.get(i).getUrl()));
+                        Card_Item_ArrayList2.add(new Card_Item_Model2 (data.get(i).getId().toString(), data.get(i).getFileName(),
+                                "#"+(i+1), data.get(i).getUsername(), data.get(i).getPrice().toString(), data.get(i).getUrl()));
                     }
 
                     recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view3);
