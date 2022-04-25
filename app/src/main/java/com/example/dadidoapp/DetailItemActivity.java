@@ -47,7 +47,7 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
-    private Button button_item_activity;
+    private Button button_item_activity, button_buy;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
 
@@ -115,6 +115,17 @@ public class DetailItemActivity extends AppCompatActivity {
             }
         });
 
+        button_buy = (Button) findViewById(R.id.button_buy2);
+        button_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailItemActivity.this, PaymentActivity.class);
+                intent.putExtra("total_price",str_TotalPrice);
+                intent.putExtra("file_name",str_file_name);
+                intent.putExtra("Item_id",str_TokenId);
+                startActivity(intent);
+            }
+        });
 
         //below this call lists of cards
         getData();

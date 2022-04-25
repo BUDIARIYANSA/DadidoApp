@@ -1,6 +1,7 @@
 package com.example.dadidoapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -48,9 +49,14 @@ public class PaymentActivity extends AppCompatActivity {
         txt_owner_name = (TextView) findViewById(R.id.texttitleOwner);
         txt_price = (TextView) findViewById(R.id.texttitleItemPrice);
 
+        Intent intent = getIntent();
+        String str_item_name = intent.getStringExtra("file_name");
+        String str_price = intent.getStringExtra("total_price");
+        String str_Item_id = intent.getStringExtra("Item_id");
 
-
-
+        txtitem_name.setText(str_item_name);
+        txtItem_id.setText(str_Item_id);
+        txt_price.setText(str_price);
     }
 
     public static String getPreference(Context context, String key) {

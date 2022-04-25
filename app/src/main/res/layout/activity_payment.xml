@@ -9,7 +9,6 @@
         android:id="@+id/texttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Total Balance"
@@ -38,13 +37,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="184dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Item"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texttitleBalance" />
 
     <TextView
@@ -93,13 +92,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="184dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Price"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texttitleOwner" />
 
     <TextView
@@ -119,19 +118,18 @@
         android:id="@+id/buttonPayNow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginEnd="60dp"
         android:backgroundTint="@color/leaf_green"
-        android:fontFamily="@font/poppinsregular"
+        android:fontFamily="@font/poppins_bold"
         android:text="Pay Now"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texttitleItemPrice"
-        app:layout_constraintVertical_bias="0.013" />
+        app:layout_constraintTop_toBottomOf="@+id/texttitleItemPrice" />
 
     <ImageView
         android:id="@+id/imageView11"
