@@ -53,6 +53,7 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+
     private static final String PREFS_NAME = "LoginPrefs";
 
 
@@ -85,7 +86,8 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
         buttonToCreateItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class));
+                Intent intent = new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -131,8 +133,12 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
                         creator_name.setText(data.get(i).getUsername());
                         collection_name.setText(data.get(i).getCollectionName());
                         description.setText(data.get(i).getDescription());
-                        Picasso.get().load(data.get(i).getImageBanner()).into(imgbanner);
-                        Picasso.get().load(data.get(i).getProfileURL()).into(imgProfil);
+
+                        String DPurl = global_var.webURL + data.get(i).getProfileURL();
+                        String Bannerurl = global_var.webURL + data.get(i).getImageBanner();
+
+                        Picasso.get().load(Bannerurl).into(imgbanner);
+                        Picasso.get().load(DPurl).into(imgProfil);
                     }
 
                 }

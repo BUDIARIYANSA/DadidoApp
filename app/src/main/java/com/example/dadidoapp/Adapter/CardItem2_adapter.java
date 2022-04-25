@@ -16,6 +16,7 @@ import com.example.dadidoapp.DetailItemActivity;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 import com.example.dadidoapp.R;
+import com.example.dadidoapp.global_var;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,10 +47,9 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
         holder.txtcreator_name.setText(dataItem.getCreator_name());
         holder.txtitem_price.setText(dataItem.getItem_price());
 
-        Picasso.get().load(dataItem.getImageURL()).into(holder.imgview);
+        String itemUrl = global_var.webURL + dataItem.getImageURL();
+        Picasso.get().load(itemUrl).into(holder.imgview);
 
-        Intent intent = new Intent(holder.card.getContext(), DetailItemActivity.class);
-        intent.putExtra("image_url", dataItem.getImageURL());
     }
 
     @Override
@@ -80,12 +80,13 @@ public class CardItem2_adapter extends RecyclerView.Adapter<CardItem2_adapter.ca
                     final Card_Item_Model2 dataItem = dataList2.get(position);
 
                     Intent intent = new Intent(card.getContext(), DetailItemActivity.class);
+                    String itemUrl = global_var.webURL + dataItem.getImageURL();
 
                     intent.putExtra("image_title", dataItem.getJudul_item());
                     intent.putExtra("TokenId", dataItem.getTokenId());
                     intent.putExtra("creator_name", dataItem.getCreator_name());
                     intent.putExtra("TotalPrice", dataItem.getItem_price());
-                    intent.putExtra("image_url", dataItem.getImageURL());
+                    intent.putExtra("image_url", itemUrl);
                     //intent.putExtra("TotalLike", txtTotallike.getText().toString().trim());
 
                     card.getContext().startActivity(intent);

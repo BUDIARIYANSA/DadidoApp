@@ -1,11 +1,12 @@
 package com.example.dadidoapp;
 
+import java.net.InetAddress;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-
-    private static final String baseURL = "http://10.0.2.2/Webservice-Dadido/";
+    private static final String baseURL = global_var.webURL+"/";
 
     private static Retrofit retrofit;
 
@@ -19,4 +20,5 @@ public class RetrofitClient {
 
         return retrofit;
     }
+
 }

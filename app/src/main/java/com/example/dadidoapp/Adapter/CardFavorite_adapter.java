@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.R;
+import com.example.dadidoapp.global_var;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public class CardFavorite_adapter extends RecyclerView.Adapter<CardFavorite_adap
         holder.image_title.setText(dataItem.getImage_title());
         holder.creator_name.setText(dataItem.getCreator_name());
 
-        Picasso.get().load(dataItem.getImage_url()).into(holder.imgview);
+        String itemUrl = global_var.webURL + dataItem.getImage_url();
+        Picasso.get().load(itemUrl).into(holder.imgview);
     }
 
     @Override

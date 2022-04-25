@@ -19,6 +19,8 @@ import com.example.dadidoapp.LayoutModel.Card_Creator_model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 import com.example.dadidoapp.R;
+import com.example.dadidoapp.RetrofitClient;
+import com.example.dadidoapp.global_var;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,8 +52,11 @@ public class CardCreator_adapter extends RecyclerView.Adapter<CardCreator_adapte
         holder.txtTotalFollower.setText(dataItem.getTotalFollower());
         holder.txtDescription.setText(dataItem.getDescription());
 
-        Picasso.get().load(dataItem.getCreatorDP_URL()).into(holder.creatordp);
-        Picasso.get().load(dataItem.getCollectionBannerURL()).into(holder.collectionbanner);
+        String DPurl = global_var.webURL + dataItem.getCreatorDP_URL();
+        String Bannerurl = global_var.webURL + dataItem.getCollectionBannerURL();
+
+        Picasso.get().load(DPurl).into(holder.creatordp);
+        Picasso.get().load(Bannerurl).into(holder.collectionbanner);
     }
 
     @Override
