@@ -56,6 +56,7 @@ public class ProfilActivity extends AppCompatActivity {
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private ImageView img_profile;
     private String str_location;
+    private int button_clicked;
 
     private String path;
 
@@ -108,7 +109,10 @@ public class ProfilActivity extends AppCompatActivity {
 
        changeprofile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { imageChooser(); }
+            public void onClick(View v) {
+                imageChooser();
+                button_clicked =1;
+            }
 
         });
 
@@ -204,47 +208,89 @@ public class ProfilActivity extends AppCompatActivity {
             if(!(new_pass).equals(confirm_newPass)) {
                 Toast.makeText(ProfilActivity.this, "New password and confirm new password not same!", Toast.LENGTH_SHORT).show();
             } else {
-                File file = new File(path);
-                RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
 
-                RequestBody requestBody = new MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("CMD", "update_profile")
-                        .addFormDataPart("username", user_name)
-                        .addFormDataPart("email", user_email)
-                        .addFormDataPart("fullname", user_fullname)
-                        .addFormDataPart("home_address", user_home_address)
-                        .addFormDataPart("old_password", old_pass)
-                        .addFormDataPart("new_password", new_pass)
-                        .addFormDataPart("choosefile", file.getName(),requestf)
-                        .build();
+                if(button_clicked == 1){
+                    File file = new File(path);
+                    RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("CMD", "update_profile")
+                            .addFormDataPart("username", user_name)
+                            .addFormDataPart("email", user_email)
+                            .addFormDataPart("fullname", user_fullname)
+                            .addFormDataPart("home_address", user_home_address)
+                            .addFormDataPart("old_password", old_pass)
+                            .addFormDataPart("new_password", new_pass)
+                            .addFormDataPart("choosefile", file.getName(),requestf)
+                            .build();
+                    Call call = apiList.updateProfile(requestBody);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            if(response.isSuccessful()) {
+                                String res = response.body().toString();
+                                if(res.equals("success")) {
+                                    setPreference(ProfilActivity.this, "username", user_name);
+                                    setPreference(ProfilActivity.this, "password", new_pass);
 
-                Call call = apiList.updateProfile(requestBody);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onResponse(Call call, Response response) {
-                        if(response.isSuccessful()) {
-                            String res = response.body().toString();
-                            if(res.equals("success")) {
-                                setPreference(ProfilActivity.this, "username", user_name);
-                                setPreference(ProfilActivity.this, "password", new_pass);
+                                    button_clicked = 0;
 
-                                Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
-                                finish();
+                                    Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call call, Throwable t) {
-                        Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+                            Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("CMD", "update_profile")
+                            .addFormDataPart("username", user_name)
+                            .addFormDataPart("email", user_email)
+                            .addFormDataPart("fullname", user_fullname)
+                            .addFormDataPart("home_address", user_home_address)
+                            .addFormDataPart("old_password", old_pass)
+                            .addFormDataPart("new_password", new_pass)
+                            .build();
+                    Call call = apiList.updateProfile(requestBody);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            if(response.isSuccessful()) {
+                                String res = response.body().toString();
+                                if(res.equals("success")) {
+                                    setPreference(ProfilActivity.this, "username", user_name);
+                                    setPreference(ProfilActivity.this, "password", new_pass);
+
+                                    button_clicked = 0;
+
+                                    Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+                            Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         }
     }
@@ -266,46 +312,85 @@ public class ProfilActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(old_pass)) {
             Toast.makeText(this, "Old password can't empty..!", Toast.LENGTH_SHORT).show();
         } else {
-            File file = new File(path);
-            RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
 
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("CMD", "update_profile")
-                    .addFormDataPart("username", user_name)
-                    .addFormDataPart("email", user_email)
-                    .addFormDataPart("fullname", user_fullname)
-                    .addFormDataPart("home_address", user_home_address)
-                    .addFormDataPart("old_password", old_pass)
-                    .addFormDataPart("choosefile", file.getName(),requestf)
-                    .build();
+            if(button_clicked == 1) {
+                File file = new File(path);
+                RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("CMD", "update_profile")
+                        .addFormDataPart("username", user_name)
+                        .addFormDataPart("email", user_email)
+                        .addFormDataPart("fullname", user_fullname)
+                        .addFormDataPart("home_address", user_home_address)
+                        .addFormDataPart("old_password", old_pass)
+                        .addFormDataPart("choosefile", file.getName(), requestf)
+                        .build();
 
-            Call call = apiList.updateProfile(requestBody);
-            call.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    if(response.isSuccessful()) {
-                        String res = response.body().toString();
-                        if(res.equals("success")) {
-                            setPreference(ProfilActivity.this, "username", user_name);
+                Call call = apiList.updateProfile(requestBody);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        if (response.isSuccessful()) {
+                            String res = response.body().toString();
+                            if (res.equals("success")) {
+                                setPreference(ProfilActivity.this, "username", user_name);
 
-                            Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
-                            finish();
+                                button_clicked = 0;
+                                Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
-                }
 
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else{
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("CMD", "update_profile")
+                        .addFormDataPart("username", user_name)
+                        .addFormDataPart("email", user_email)
+                        .addFormDataPart("fullname", user_fullname)
+                        .addFormDataPart("home_address", user_home_address)
+                        .addFormDataPart("old_password", old_pass)
+                        .build();
 
+                Call call = apiList.updateProfile(requestBody);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        if (response.isSuccessful()) {
+                            String res = response.body().toString();
+                            if (res.equals("success")) {
+                                setPreference(ProfilActivity.this, "username", user_name);
+
+                                button_clicked = 0;
+                                Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
 
