@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.LayoutModel.Card_Item_Model2;
 import com.example.dadidoapp.R;
 import com.example.dadidoapp.global_var;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import xyz.hanks.library.bang.SmallBangView;
 
 public class CardFavorite_adapter extends RecyclerView.Adapter<CardFavorite_adapter.cardFavoriteViewHolder> {
 
@@ -59,6 +62,7 @@ public class CardFavorite_adapter extends RecyclerView.Adapter<CardFavorite_adap
         private TextView image_title, creator_name;
         private CardView card;
         private ImageView imgview;
+        private SmallBangView imgFav;
 
         public cardFavoriteViewHolder(View FavoriteView) {
             super(FavoriteView);
@@ -66,10 +70,25 @@ public class CardFavorite_adapter extends RecyclerView.Adapter<CardFavorite_adap
             creator_name = (TextView) FavoriteView.findViewById(R.id.textname);
 
             card = (CardView) FavoriteView.findViewById(R.id.card_model_favorite);
-
             imgview= (ImageView) FavoriteView.findViewById(R.id.imageViewItemIMG);
-        }
+            imgFav = (SmallBangView) FavoriteView.findViewById(R.id.imageViewAnimation);
 
+            imgFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = cardFavoriteViewHolder.this.getLayoutPosition();
+                    final Card_Favorite_Model dataItem = dataList.get(position);
+
+                    if (imgFav.isSelected()) {
+                        imgFav.setSelected(false);
+                    } else {
+                        imgFav.setSelected(true);
+                        imgFav.likeAnimation();
+                    }
+                }
+            });
+
+        }
     }
 
 }

@@ -96,35 +96,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewCollectionTitle" />
 
             <TextView
-                android:id="@+id/textViewFollowerCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/poppinsregular"
-                android:text=" 0"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toStartOf="@+id/textViewFollower"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCreatorName" />
-
-            <TextView
-                android:id="@+id/textViewFollower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppinsregular"
-                android:text="Followers"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewProfileCreator"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCreatorName" />
-
-            <TextView
                 android:id="@+id/textViewCollectionDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppinsregular"
@@ -135,7 +111,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFollower" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCreatorName2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
