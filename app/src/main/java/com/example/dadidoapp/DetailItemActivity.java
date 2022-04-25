@@ -24,6 +24,8 @@ import com.example.dadidoapp.Model.Item;
 import com.example.dadidoapp.Model.ItemCollection;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
@@ -50,6 +52,8 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView tokenid;
     private SmallBangView imgFav;
     private Button button_item_activity;
+    private TextView tgl_transaksi;
+    private Button button_buy;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
 
@@ -85,7 +89,9 @@ public class DetailItemActivity extends AppCompatActivity {
         total_fav = (TextView) findViewById(R.id.textViewFavTotal);
         description = (TextView) findViewById(R.id.textViewDescription);
         owner_name = (TextView) findViewById(R.id.textViewOwner);
+
         imgFav = (SmallBangView) findViewById(R.id.imageViewAnimation);
+        tgl_transaksi = (TextView) findViewById(R.id.textViewLastBoughtDate);
 
         Intent intent = getIntent();
         String str_file_name=intent.getStringExtra("image_title");
@@ -121,12 +127,24 @@ public class DetailItemActivity extends AppCompatActivity {
         imgFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imgFav.isSelected()) {
+                if (imgFav.isSelected()) {
                     imgFav.setSelected(false);
                 } else {
                     imgFav.setSelected(true);
                     imgFav.likeAnimation();
                 }
+            }
+        });
+
+        button_buy = (Button) findViewById(R.id.button_buy2);
+        button_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailItemActivity.this, PaymentActivity.class);
+                intent.putExtra("total_price",str_TotalPrice);
+                intent.putExtra("file_name",str_file_name);
+                intent.putExtra("Item_id",str_TokenId);
+                startActivity(intent);
             }
         });
 
@@ -147,8 +165,12 @@ public class DetailItemActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<ItemCollection>> call, Response<ArrayList<ItemCollection>> response) {
                 if(response.isSuccessful()) {
                     ArrayList<ItemCollection> data = response.body();
-                    collection_name.setText(data.get(0).getCollectionName());
-                    owner_name.setText(data.get(0).getOwnBy());
+                    for (int i = 0 ; i<data.size();i++){
+                        collection_name.setText(data.get(i).getCollectionName());
+                        owner_name.setText(data.get(i).getOwnBy());
+                        tgl_transaksi.setText(data.get(i).getLast_activity());
+                    }
+
                 }
             }
 

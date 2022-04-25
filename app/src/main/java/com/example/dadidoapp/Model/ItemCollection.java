@@ -7,39 +7,51 @@ public class ItemCollection {
     @SerializedName("collection_name")
     private String collectionName;
 
-    @SerializedName("username")
+    @SerializedName("owner")
     private String ownBy;
 
-    @SerializedName("status_favorit")
-    private Integer statusFav;
+    @SerializedName("last_activity")
+    private String last_activity;
 
-    public ItemCollection(String collectionName, String ownBy, Integer statusFav) {
+    @SerializedName("event")
+    private String event;
+
+    public ItemCollection(String collectionName, String ownBy, String last_activity, String event) {
         this.collectionName = collectionName;
         this.ownBy = ownBy;
-        this.statusFav = statusFav;
-    }
-
-    public Integer getStatusFav() {
-        return statusFav;
-    }
-
-    public void setStatusFav(Integer statusFav) {
-        this.statusFav = statusFav;
+        this.last_activity = last_activity;
+        this.event = event;
     }
 
     public String getCollectionName() {
         return collectionName;
     }
 
-    public void setCollectionName(String collectionName) {
-        this.collectionName = collectionName;
-    }
-
     public String getOwnBy() {
         return ownBy;
     }
 
+    public String getLast_activity() {
+        return last_activity;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
+    }
+
     public void setOwnBy(String ownBy) {
         this.ownBy = ownBy;
+    }
+
+    public void setLast_activity(String last_activity) {
+        this.last_activity = last_activity;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
     }
 }
