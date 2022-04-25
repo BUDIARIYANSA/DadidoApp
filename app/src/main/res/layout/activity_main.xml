@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText_username"
+            android:id="@+id/textInputEditText_file_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinsregular" />
