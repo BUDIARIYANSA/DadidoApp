@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -14,6 +15,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Button btn_maps;
+    private String location;
 
 
     @Override
@@ -45,6 +48,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        btn_maps = (Button) findViewById(R.id.btnmaps) ;
+        btn_maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, ProfilActivity.class);
+                intent.putExtra("map_position", location);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -76,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapClick(@NonNull LatLng latLng) {
         mMap.addMarker(new MarkerOptions().position(latLng).title("New Marker"));
 
-        getCompleteAddressString(latLng);
+        location = getCompleteAddressString(latLng);
     }
 
     private String getCompleteAddressString(LatLng latLng) {

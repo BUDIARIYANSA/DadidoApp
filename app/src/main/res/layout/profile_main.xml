@@ -142,7 +142,6 @@
                 android:textSize="20sp"
                 app:boxStrokeColor="@color/leaf_green"
                 app:counterEnabled="true"
-                app:counterMaxLength="50"
                 app:endIconMode="clear_text"
                 app:hintTextColor="@color/leaf_green"
                 app:layout_constraintEnd_toStartOf="@+id/imageButton_location"

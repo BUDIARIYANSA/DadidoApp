@@ -51,6 +51,7 @@ public class ProfilActivity extends AppCompatActivity {
     private TextInputLayout confirm_newpass;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private ImageView img_profile;
+    private String str_location;
 
     int SELECT_PICTURE = 200;
 
@@ -89,7 +90,13 @@ public class ProfilActivity extends AppCompatActivity {
         confirm_newpass = (TextInputLayout) findViewById(R.id.textInputLayoutConfirmNewPassword);
         location = (ImageButton) findViewById(R.id.imageButton_location);
 
-        loadDataProfile();
+        Intent intent = getIntent();
+        str_location = intent.getStringExtra("map_position");
+
+        loadDataProfile(str_location);
+
+
+
 
         update = (Button) findViewById(R.id.buttonUpdate);
         changeprofile = (Button) findViewById(R.id.buttonChangeProfile);
@@ -208,7 +215,7 @@ public class ProfilActivity extends AppCompatActivity {
         }
     }
 
-    public void loadDataProfile() {
+    public void loadDataProfile(String str_location) {
         String str_username = getPreference(ProfilActivity.this, "username");
         String str_password = getPreference(ProfilActivity.this, "password");
 
@@ -231,7 +238,13 @@ public class ProfilActivity extends AppCompatActivity {
                     fullname.getEditText().setText(data.get(0).getFullname());
                     email.getEditText().setText(data.get(0).getEmail());
                     oldpass.getEditText().setText(data.get(0).getPassword());
-                    home_address.getEditText().setText(data.get(0).getHomeAddress());
+
+
+                    if (str_location == null) {
+                        home_address.getEditText().setText(data.get(0).getHomeAddress());
+                    } else {
+                        home_address.getEditText().setText(str_location);
+                    }
                 }
             }
 
