@@ -3,6 +3,7 @@ package com.example.dadidoapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -39,7 +40,7 @@ public class ProfilActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "LoginPrefs";
 
     private ImageView profile_url;
-    private Button update;
+    private Button update, changeprofile;
     private ImageButton location;
     private TextInputLayout username;
     private TextInputLayout email;
@@ -49,6 +50,9 @@ public class ProfilActivity extends AppCompatActivity {
     private TextInputLayout newpass;
     private TextInputLayout confirm_newpass;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+    private ImageView img_profile;
+
+    int SELECT_PICTURE = 200;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing back button
@@ -88,6 +92,15 @@ public class ProfilActivity extends AppCompatActivity {
         loadDataProfile();
 
         update = (Button) findViewById(R.id.buttonUpdate);
+        changeprofile = (Button) findViewById(R.id.buttonChangeProfile);
+        img_profile = (ImageView) findViewById(R.id.imageProfile);
+
+       changeprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { imageChooser(); }
+
+        });
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +115,30 @@ public class ProfilActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private void imageChooser() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == SELECT_PICTURE) {
+
+                Uri selectImageUri = data.getData();
+                if (null != selectImageUri) {
+
+                    img_profile.setImageURI(selectImageUri);
+                }
+            }
+        }
     }
 
     public void updateDataProfile() {

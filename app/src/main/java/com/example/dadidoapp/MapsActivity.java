@@ -1,12 +1,22 @@
 package com.example.dadidoapp;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,11 +28,14 @@ import com.example.dadidoapp.databinding.ActivityMapsBinding;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
+    private Button btn_maps;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +43,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-        .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
     }
-
-
 
     /**
      * Manipulates the map once available.
@@ -52,11 +63,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng tangerang= new LatLng(-6.242373, 106.648155);
-        mMap.addMarker(new MarkerOptions().position(tangerang).title("Marker in Tangerang"));
-        // mMap.moveCamera(CameraUpdateFactory.newLatLng(tangerang));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(tangerang, 15.0f));
 
+            LatLng salatiga = new LatLng(-7.3305, 110.5084 );
+            mMap.addMarker(new MarkerOptions().position(salatiga).title("Marker in Salatiga"));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(salatiga, 15.0f));
+
+            mMap.setOnMapClickListener(this);
+
+    }
+
+    @Override
+    public void onMapClick(@NonNull LatLng latLng) {
+        mMap.addMarker(new MarkerOptions().position(latLng).title("New Marker"));
+
+        getCompleteAddressString(latLng);
+    }
+
+    private String getCompleteAddressString(LatLng latLng) {
+        String ret = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder stringBuilder = new StringBuilder("");
+                for(int i=0; i<= returnedAddress.getMaxAddressLineIndex();i++) {
+                    stringBuilder.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                ret = stringBuilder.toString();
+                Log.w("CurrentLocation", ret);
+            }
+        } catch (Exception ex) {
+            Log.w("CurrentLocation", "Can't get Address");
+        }
+        return ret;
     }
 }
