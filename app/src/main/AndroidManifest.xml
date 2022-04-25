@@ -45,9 +45,6 @@
             android:name=".OwnDetailCollectionActivity"
             android:exported="false" />
         <activity
-            android:name=".OwnDetailCollectionActivity"
-            android:exported="false" />
-        <activity
             android:name=".HistoryItemActivity"
             android:exported="false" />
         <activity
