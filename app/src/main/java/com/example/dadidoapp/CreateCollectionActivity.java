@@ -19,12 +19,23 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CreateCollectionActivity extends AppCompatActivity {
 
-    Button Uploud_Btn;
-    ImageView img;
+    private Button Uploud_Btn;
+    private ImageView img;
+    private Button Create_Btn;
     private TextInputLayout c_name;
     private TextInputLayout c_desc;
+    private int counter;
 
     int SELECT_PICTURE = 200;
 
@@ -58,16 +69,30 @@ public class CreateCollectionActivity extends AppCompatActivity {
         actionBar.setTitle("Create Your New Collection");
 
         Uploud_Btn=(Button)findViewById(R.id.SelectImageBtn);
+        Create_Btn=(Button)findViewById(R.id.buttoncreate);
         c_name = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         c_desc = (TextInputLayout) findViewById(R.id.textInputLayoutdesc);
         img=(ImageView)findViewById(R.id.img);
+
+        counter = 0;
 
         Uploud_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageChooser();
+                counter = 1;
             }
 
+        });
+
+        Create_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (counter == 1) {
+                    upload_image();
+                }
+
+            }
         });
     }
 
@@ -118,5 +143,46 @@ public class CreateCollectionActivity extends AppCompatActivity {
     public static String getPreference(Context context, String key) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return settings.getString(key, "");
+    }
+
+    public void upload_image(){
+        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+
+        String username = getPreference(getApplicationContext(), "username");
+
+        File file = new File(path);
+        RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
+        String str_cname = c_name.getEditText().getText().toString().trim();
+        String str_cdesc = c_desc.getEditText().getText().toString().trim();
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "create_collection")
+                .addFormDataPart("username", username)
+                .addFormDataPart("collection_name",str_cname)
+                .addFormDataPart("description",str_cdesc)
+                .addFormDataPart("choosefile", file.getName(),requestf)
+                .build();
+        System.out.println(requestBody.toString());
+        Call call = apiList.createItem(requestBody);
+        System.out.println(call.toString());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()){
+                    String res = response.body().toString();
+                    Toast.makeText(CreateCollectionActivity.this, res, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(CreateCollectionActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(CreateCollectionActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
