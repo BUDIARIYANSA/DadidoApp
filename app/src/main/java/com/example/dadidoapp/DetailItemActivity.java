@@ -31,6 +31,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import xyz.hanks.library.bang.SmallBangView;
 
 public class DetailItemActivity extends AppCompatActivity {
 
@@ -47,6 +48,7 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
+    private SmallBangView imgFav;
     private Button button_item_activity;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
@@ -83,6 +85,7 @@ public class DetailItemActivity extends AppCompatActivity {
         total_fav = (TextView) findViewById(R.id.textViewFavTotal);
         description = (TextView) findViewById(R.id.textViewDescription);
         owner_name = (TextView) findViewById(R.id.textViewOwner);
+        imgFav = (SmallBangView) findViewById(R.id.imageViewAnimation);
 
         Intent intent = getIntent();
         String str_file_name=intent.getStringExtra("image_title");
@@ -115,6 +118,17 @@ public class DetailItemActivity extends AppCompatActivity {
             }
         });
 
+        imgFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(imgFav.isSelected()) {
+                    imgFav.setSelected(false);
+                } else {
+                    imgFav.setSelected(true);
+                    imgFav.likeAnimation();
+                }
+            }
+        });
 
         //below this call lists of cards
         getData();

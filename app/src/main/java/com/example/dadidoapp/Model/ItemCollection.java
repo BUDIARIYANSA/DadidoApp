@@ -10,9 +10,21 @@ public class ItemCollection {
     @SerializedName("username")
     private String ownBy;
 
-    public ItemCollection(String collectionName, String ownBy) {
+    @SerializedName("status_favorit")
+    private Integer statusFav;
+
+    public ItemCollection(String collectionName, String ownBy, Integer statusFav) {
         this.collectionName = collectionName;
         this.ownBy = ownBy;
+        this.statusFav = statusFav;
+    }
+
+    public Integer getStatusFav() {
+        return statusFav;
+    }
+
+    public void setStatusFav(Integer statusFav) {
+        this.statusFav = statusFav;
     }
 
     public String getCollectionName() {
