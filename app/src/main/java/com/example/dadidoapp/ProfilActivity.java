@@ -3,8 +3,10 @@ package com.example.dadidoapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +27,10 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -40,7 +44,7 @@ public class ProfilActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "LoginPrefs";
 
     private ImageView profile_url;
-    private Button update, changeprofile;
+    private Button updateProfile, updatePassword, changeprofile;
     private ImageButton location;
     private TextInputLayout username;
     private TextInputLayout email;
@@ -52,6 +56,8 @@ public class ProfilActivity extends AppCompatActivity {
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private ImageView img_profile;
     private String str_location;
+
+    private String path;
 
     int SELECT_PICTURE = 200;
 
@@ -95,10 +101,8 @@ public class ProfilActivity extends AppCompatActivity {
 
         loadDataProfile(str_location);
 
-
-
-
-        update = (Button) findViewById(R.id.buttonUpdate);
+        updatePassword = (Button) findViewById(R.id.buttonUpdatePassword);
+        updateProfile = (Button) findViewById(R.id.buttonUpdateProfile);
         changeprofile = (Button) findViewById(R.id.buttonChangeProfile);
         img_profile = (ImageView) findViewById(R.id.imageProfile);
 
@@ -108,10 +112,17 @@ public class ProfilActivity extends AppCompatActivity {
 
         });
 
-        update.setOnClickListener(new View.OnClickListener() {
+        updatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateDataProfile();
+                updatePassword();
+            }
+        });
+
+        updateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateProfile();
             }
         });
 
@@ -142,12 +153,32 @@ public class ProfilActivity extends AppCompatActivity {
                 if (null != selectImageUri) {
 
                     img_profile.setImageURI(selectImageUri);
+                    path = getRealPathFromURI(selectImageUri,ProfilActivity.this);
+                    Toast.makeText(ProfilActivity.this, path, Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
-    public void updateDataProfile() {
+    public String getRealPathFromURI(Uri contentUri, Context context) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+            //Log.e("EditActivity", "getRealPathFromURI Exception : " + e.toString());
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    public void updatePassword() {
 
         String user_name = username.getEditText().getText().toString().trim();
         String user_fullname = fullname.getEditText().getText().toString().trim();
@@ -173,6 +204,9 @@ public class ProfilActivity extends AppCompatActivity {
             if(!(new_pass).equals(confirm_newPass)) {
                 Toast.makeText(ProfilActivity.this, "New password and confirm new password not same!", Toast.LENGTH_SHORT).show();
             } else {
+                File file = new File(path);
+                RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
+
                 RequestBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addFormDataPart("CMD", "update_profile")
@@ -182,6 +216,7 @@ public class ProfilActivity extends AppCompatActivity {
                         .addFormDataPart("home_address", user_home_address)
                         .addFormDataPart("old_password", old_pass)
                         .addFormDataPart("new_password", new_pass)
+                        .addFormDataPart("choosefile", file.getName(),requestf)
                         .build();
 
                 Call call = apiList.updateProfile(requestBody);
@@ -211,6 +246,66 @@ public class ProfilActivity extends AppCompatActivity {
                     }
                 });
             }
+        }
+    }
+
+    public void updateProfile() {
+
+        String user_name = username.getEditText().getText().toString().trim();
+        String user_fullname = fullname.getEditText().getText().toString().trim();
+        String user_email = email.getEditText().getText().toString().trim();
+        String user_home_address = home_address.getEditText().getText().toString().trim();
+        String old_pass = oldpass.getEditText().getText().toString().trim();
+
+        if(TextUtils.isEmpty(user_name)) {
+            Toast.makeText(this, "Username can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(user_fullname)) {
+            Toast.makeText(this, "Fullname can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(user_email)) {
+            Toast.makeText(this, "Email can't empty..!", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(old_pass)) {
+            Toast.makeText(this, "Old password can't empty..!", Toast.LENGTH_SHORT).show();
+        } else {
+            File file = new File(path);
+            RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
+
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("CMD", "update_profile")
+                    .addFormDataPart("username", user_name)
+                    .addFormDataPart("email", user_email)
+                    .addFormDataPart("fullname", user_fullname)
+                    .addFormDataPart("home_address", user_home_address)
+                    .addFormDataPart("old_password", old_pass)
+                    .addFormDataPart("choosefile", file.getName(),requestf)
+                    .build();
+
+            Call call = apiList.updateProfile(requestBody);
+            call.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if(response.isSuccessful()) {
+                        String res = response.body().toString();
+                        if(res.equals("success")) {
+                            setPreference(ProfilActivity.this, "username", user_name);
+
+                            Toast.makeText(ProfilActivity.this, "Update profile successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(ProfilActivity.this, HomeActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(ProfilActivity.this, "Update profile failed", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(ProfilActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, Throwable t) {
+                    Toast.makeText(ProfilActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 
