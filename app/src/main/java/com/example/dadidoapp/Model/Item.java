@@ -13,6 +13,9 @@ public class Item {
     @SerializedName("file_name")
     private String fileName;
 
+    @SerializedName("username")
+    private String username;
+
     @SerializedName("image_url")
     private String url;
 
@@ -25,14 +28,23 @@ public class Item {
     @SerializedName("price")
     private Integer price;
 
-    public Item(Integer idCollection, String fileName, String url, String description, String sellStatus, Integer price, Integer id) {
+    public Item(String username, Integer idCollection, String fileName, String url, String description, String sellStatus, Integer price, Integer id) {
         this.id = id;
+        this.username = username;
         this.idCollection = idCollection;
         this.fileName = fileName;
         this.url = url;
         this.description = description;
         this.sellStatus = sellStatus;
         this.price = price;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getId() {
