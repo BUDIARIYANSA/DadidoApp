@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,6 +27,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -176,8 +180,9 @@ public class CreateItemActivity extends AppCompatActivity {
                     String res = response.body().toString();
                     Toast.makeText(CreateItemActivity.this, res, Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(CreateItemActivity.this, OwnDetailCollectionActivity.class);
+                    Intent intent = new Intent(CreateItemActivity.this, HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
 
