@@ -1,6 +1,8 @@
 package com.example.dadidoapp;
+import com.example.dadidoapp.Model.Collection;
 import com.example.dadidoapp.Model.Creator;
 import com.example.dadidoapp.Model.Item;
+import com.example.dadidoapp.Model.ItemCollection;
 import com.example.dadidoapp.Model.Profile;
 import com.example.dadidoapp.Model.User;
 import com.example.dadidoapp.Model.Wallet;
@@ -50,4 +52,7 @@ public interface ApiList {
 
     @POST("webservice.php")
     Call<ArrayList<Item>> itemById(@Body RequestBody body);
+
+    @POST("webservice.php")
+    Call<ArrayList<Collection>> itemDetail(@Body RequestBody body);
 }

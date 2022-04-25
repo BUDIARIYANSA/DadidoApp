@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
+import com.example.dadidoapp.Model.Collection;
 import com.example.dadidoapp.Model.Item;
+import com.example.dadidoapp.Model.ItemCollection;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -80,6 +82,7 @@ public class DetailItemActivity extends AppCompatActivity {
         tokenid = (TextView) findViewById(R.id.textViewTokenId);
         total_fav = (TextView) findViewById(R.id.textViewFavTotal);
         description = (TextView) findViewById(R.id.textViewDescription);
+        owner_name = (TextView) findViewById(R.id.textViewOwner);
 
         Intent intent = getIntent();
         String str_file_name=intent.getStringExtra("image_title");
@@ -98,6 +101,8 @@ public class DetailItemActivity extends AppCompatActivity {
         description.setText(str_creatorName);
         Picasso.get().load(str_ImageUrl).into(imgview);
 
+        detailItem(str_TokenId);
+
         button_item_activity = (Button) findViewById(R.id.button_item_activity);
 
         button_item_activity.setOnClickListener(new View.OnClickListener() {
@@ -115,13 +120,38 @@ public class DetailItemActivity extends AppCompatActivity {
         getData();
     }
 
+    void detailItem(String tokenId) {
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "get_detail_item")
+                .addFormDataPart("id", tokenId)
+                .build();
+
+        Call<ArrayList<Collection>> call = apiList.itemDetail(requestBody);
+        call.enqueue(new Callback<ArrayList<Collection>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Collection>> call, Response<ArrayList<Collection>> response) {
+                if(response.isSuccessful()) {
+                    ArrayList<Collection> data = response.body();
+                    collection_name.setText(data.get(0).getCollectionName());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Collection>> call, Throwable t) {
+
+            }
+        });
+    }
+
     void getData(){
         Intent intent = getIntent();
         String id = intent.getStringExtra("TokenId");
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("CMD", "get_detail_item")
+                .addFormDataPart("CMD", "get_more_item")
                 .addFormDataPart("id", id)
                 .build();
 

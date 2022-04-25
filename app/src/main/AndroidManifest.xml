@@ -14,6 +14,9 @@
         android:theme="@style/Theme.DaradiApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".OwnDetailCollectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".HistoryItemActivity"
             android:exported="false" />
         <activity
