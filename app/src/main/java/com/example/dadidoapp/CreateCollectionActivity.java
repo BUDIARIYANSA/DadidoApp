@@ -43,7 +43,7 @@ public class CreateCollectionActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Create Your New Collection");
 
-        Uploud_Btn=(Button)findViewById(R.id.UploadBtn);
+        Uploud_Btn=(Button)findViewById(R.id.SelectImageBtn);
         img=(ImageView)findViewById(R.id.img);
 
         Uploud_Btn.setOnClickListener(new View.OnClickListener() {

@@ -177,7 +177,8 @@ public class ProfilActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     ArrayList<Profile> data = response.body();
 
-                    Picasso.get().load(data.get(0).getProfileURL()).into(profile_url);
+                    String DPurl = global_var.webURL + data.get(0).getProfileURL();
+                    Picasso.get().load(DPurl).into(profile_url);
                     username.getEditText().setText(data.get(0).getUsername());
                     fullname.getEditText().setText(data.get(0).getFullname());
                     email.getEditText().setText(data.get(0).getEmail());

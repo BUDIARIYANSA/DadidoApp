@@ -57,17 +57,17 @@
             app:layout_constraintTop_toBottomOf="@+id/infosecond" />
 
         <Button
-            android:id="@+id/UploadBtn"
+            android:id="@+id/SelectImageBtn"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/leaf_green"
             android:fontFamily="@font/poppins_bold"
-            android:text="Upload"
-            android:textSize="15dp"
+            android:text="Select Image"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/white"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img"
@@ -96,7 +96,7 @@
             app:boxStrokeColor="@color/leaf_green"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/UploadBtn">
+            app:layout_constraintTop_toBottomOf="@+id/SelectImageBtn">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -143,7 +143,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/buttonclction"
+            android:id="@+id/buttoncreate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"

@@ -50,8 +50,6 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     private TextView total_item;
     private Button buttonToCreateItem;
 
-    private String str_collection_name;
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -90,7 +88,6 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(OwnDetailCollectionActivity.this, CreateItemActivity.class);
                 startActivity(intent);
-                intent.putExtra("Collection_name",str_collection_name);
             }
         });
 
@@ -135,10 +132,13 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
                     for (int i = 0; i < data.size(); i++) {
                         creator_name.setText(data.get(i).getUsername());
                         collection_name.setText(data.get(i).getCollectionName());
-                        get_string_coll(data.get(i).getCollectionName());
                         description.setText(data.get(i).getDescription());
-                        Picasso.get().load(data.get(i).getImageBanner()).into(imgbanner);
-                        Picasso.get().load(data.get(i).getProfileURL()).into(imgProfil);
+
+                        String DPurl = global_var.webURL + data.get(i).getProfileURL();
+                        String Bannerurl = global_var.webURL + data.get(i).getImageBanner();
+
+                        Picasso.get().load(Bannerurl).into(imgbanner);
+                        Picasso.get().load(DPurl).into(imgProfil);
                     }
 
                 }
@@ -228,10 +228,6 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    void get_string_coll(String str){
-        str_collection_name = str;
     }
 
 }
