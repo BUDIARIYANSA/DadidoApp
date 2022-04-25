@@ -24,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -32,6 +33,7 @@ import com.example.dadidoapp.databinding.ActivityMapsBinding;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMapClickListener {
@@ -86,7 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(latLng).title("New Marker"));
+        mMap.addMarker(new MarkerOptions().position(latLng).title("New Marker").icon(BitmapDescriptorFactory.defaultMarker(new Random().nextInt(360))));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
         location = getCompleteAddressString(latLng);
 
