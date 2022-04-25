@@ -24,6 +24,8 @@ import com.example.dadidoapp.Model.Item;
 import com.example.dadidoapp.Model.ItemCollection;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
@@ -47,6 +49,7 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
+    private TextView tgl_transaksi;
     private Button button_item_activity, button_buy;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
@@ -83,6 +86,7 @@ public class DetailItemActivity extends AppCompatActivity {
         total_fav = (TextView) findViewById(R.id.textViewFavTotal);
         description = (TextView) findViewById(R.id.textViewDescription);
         owner_name = (TextView) findViewById(R.id.textViewOwner);
+        tgl_transaksi = (TextView) findViewById(R.id.textViewLastBoughtDate);
 
         Intent intent = getIntent();
         String str_file_name=intent.getStringExtra("image_title");
@@ -144,8 +148,12 @@ public class DetailItemActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<ItemCollection>> call, Response<ArrayList<ItemCollection>> response) {
                 if(response.isSuccessful()) {
                     ArrayList<ItemCollection> data = response.body();
-                    collection_name.setText(data.get(0).getCollectionName());
-                    owner_name.setText(data.get(0).getOwnBy());
+                    for (int i = 0 ; i<data.size();i++){
+                        collection_name.setText(data.get(i).getCollectionName());
+                        owner_name.setText(data.get(i).getOwnBy());
+                        tgl_transaksi.setText(data.get(i).getLast_activity());
+                    }
+
                 }
             }
 
