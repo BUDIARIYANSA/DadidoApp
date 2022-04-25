@@ -44,12 +44,9 @@ public class DetailCollectionActivity extends AppCompatActivity {
     private ImageView imgProfil;
     private TextView collection_name;
     private TextView creator_name;
-    private TextView total_follower;
     private TextView description;
     private TextView total_item;
     private TextView cheapest;
-    private Button buttonToCreateItem;
-    private Button btn_add_new_item;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
