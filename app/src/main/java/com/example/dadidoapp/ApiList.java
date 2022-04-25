@@ -54,7 +54,7 @@ public interface ApiList {
     Call<ArrayList<Item>> itemById(@Body RequestBody body);
 
     @POST("webservice.php")
-    Call<ArrayList<Collection>> itemDetail(@Body RequestBody body);
+    Call<ArrayList<ItemCollection>> itemDetail(@Body RequestBody body);
 
     @POST("webservice.php")
     Call<Object> createItem(@Body RequestBody body);

@@ -127,19 +127,19 @@ public class DetailItemActivity extends AppCompatActivity {
                 .addFormDataPart("id", tokenId)
                 .build();
 
-        Call<ArrayList<Collection>> call = apiList.itemDetail(requestBody);
-        call.enqueue(new Callback<ArrayList<Collection>>() {
+        Call<ArrayList<ItemCollection>> call = apiList.itemDetail(requestBody);
+        call.enqueue(new Callback<ArrayList<ItemCollection>>() {
             @Override
-            public void onResponse(Call<ArrayList<Collection>> call, Response<ArrayList<Collection>> response) {
+            public void onResponse(Call<ArrayList<ItemCollection>> call, Response<ArrayList<ItemCollection>> response) {
                 if(response.isSuccessful()) {
-                    ArrayList<Collection> data = response.body();
+                    ArrayList<ItemCollection> data = response.body();
                     collection_name.setText(data.get(0).getCollectionName());
-
+                    owner_name.setText(data.get(0).getOwnBy());
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Collection>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ItemCollection>> call, Throwable t) {
 
             }
         });

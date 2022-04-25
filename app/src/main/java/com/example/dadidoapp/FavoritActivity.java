@@ -13,11 +13,14 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import xyz.hanks.library.bang.SmallBangView;
 
 public class FavoritActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -44,6 +48,7 @@ public class FavoritActivity extends AppCompatActivity {
     private CardFavorite_adapter adapter;
     FloatingActionButton mCollection;
     private ArrayList<Card_Favorite_Model> Card_Favorite_ArrayList;
+    private SmallBangView imageFav;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
 
     SharedPreferences sharedPreferences;
@@ -128,6 +133,7 @@ public class FavoritActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         bottomNavigationView = findViewById(R.id.bottomNav);
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
