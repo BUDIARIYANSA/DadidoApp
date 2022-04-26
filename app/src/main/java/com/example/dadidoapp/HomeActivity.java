@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     Button mostExpensive_btn;
     Button new_btn;
+    Button trending_btn;
     FloatingActionButton mCollection;
 
     SharedPreferences sharedPreferences;
@@ -129,6 +130,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mostExpensive_btn = (Button)findViewById(R.id.button_mostExpensive);
         new_btn = (Button)findViewById(R.id.button_New);
+        trending_btn = (Button)findViewById(R.id.button_Trending);
         mCollection = (FloatingActionButton) findViewById(R.id.mCollection);
 
         androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -149,6 +151,15 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.DisplayFragment, new new_page_activity());
+                ft.commit();
+            }
+        });
+
+        trending_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.DisplayFragment, new Trending_page_Activity());
                 ft.commit();
             }
         });
