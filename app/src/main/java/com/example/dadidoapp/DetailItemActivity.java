@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -131,8 +132,38 @@ public class DetailItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (imgFav.isSelected()) {
-                    imgFav.setSelected(false);
-                    imgFav.likeAnimation();
+                    Intent intent1 = getIntent();
+                    ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("CMD", "insert_new_fav")
+                            .addFormDataPart("username_creator", owner_name.getText().toString().trim())
+                            .addFormDataPart("username_seeing", getPreference(DetailItemActivity.this, "username"))
+                            .addFormDataPart("id_item", str_TokenId)
+                            .addFormDataPart("collection_name", collection_name.getText().toString().trim())
+                            .build();
+                    Call call = apiList.favItem(requestBody);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            if (response.isSuccessful()) {
+                                String res = response.body().toString();
+                                if (res.equals("success")) {
+                                    imgFav.setSelected(false);
+                                    imgFav.likeAnimation();
+
+                                    Toast.makeText(DetailItemActivity.this, "Unfavorited", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(DetailItemActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+
+                        }
+                    });
                 } else {
                     Intent intent1 = getIntent();
                     ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
@@ -184,6 +215,7 @@ public class DetailItemActivity extends AppCompatActivity {
 
         //below this call lists of cards
         getData();
+
     }
 
     void detailItem(String tokenId) {
@@ -204,13 +236,48 @@ public class DetailItemActivity extends AppCompatActivity {
                         owner_name.setText(data.get(i).getOwnBy());
                         tgl_transaksi.setText(data.get(i).getLast_activity());
                     }
-
+                    checkStatusFav(tokenId, data.get(data.size()-1).getOwnBy(), data.get(data.size()-1).getCollectionName());
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<ItemCollection>> call, Throwable t) {
 
+            }
+        });
+    }
+
+    void checkStatusFav(String str_TokenId, String ownName, String collectName){
+        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "check_status")
+                .addFormDataPart("username_creator", ownName)
+                .addFormDataPart("username_seeing", getPreference(DetailItemActivity.this, "username"))
+                .addFormDataPart("id_item", str_TokenId)
+                .addFormDataPart("collection_name", collectName)
+                .build();
+        Call call = apiList.favItem(requestBody);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    String res = response.body().toString();
+                    if (res.equals("0")) {
+                        imgFav.setSelected(false);
+                    } else if(res.equals("Belum Ada")) {
+                        imgFav.setSelected(false);
+                    } else {
+                        imgFav.setSelected(true);
+                    }
+                } else {
+                    Toast.makeText(DetailItemActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                System.out.println("Error : "+t.toString());
             }
         });
     }

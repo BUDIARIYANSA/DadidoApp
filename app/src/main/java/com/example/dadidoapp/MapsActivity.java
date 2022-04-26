@@ -28,7 +28,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.dadidoapp.databinding.ActivityMapsBinding;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,12 +76,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-
-
-            LatLng salatiga = new LatLng(-7.3305, 110.5084 );
-            mMap.addMarker(new MarkerOptions().position(salatiga).title("Marker in Salatiga"));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(salatiga, 15.0f));
-            mMap.setOnMapClickListener(this);
+        LatLng salatiga = new LatLng(-7.3305, 110.5084 );
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(salatiga, 15.0f));
+        mMap.setOnMapClickListener(this);
     }
 
     @Override
