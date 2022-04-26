@@ -35,8 +35,11 @@ Our Web Service are on different repositories, this repositories only for our pr
 ### Using Android Virtual Device
 1. Make sure server Apache is running and Database is running, also SQL are updated
 2. Open `global_var.java`
-3. Edit the `webURL` change the ip or domain to 10.0.2.2
+3. Edit the `webURL` change the ip or domain to `10.0.2.2`
 ### Using Phone
 1. Make sure server Apache is running and Database is running, also SQL are updated
 2. Open `global_var.java`
 3. Edit the `webURL` change the ip or domain to your laptop/pc ip address
+### Using our Hosting Service
+1. Open `global_var.java`
+2. Edit the `webURL` change to `https://www.kecapy.com/webservice-dadido`
