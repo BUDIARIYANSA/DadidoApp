@@ -1,5 +1,6 @@
 package com.example.dadidoapp;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
@@ -54,6 +56,13 @@ public class DetailItemActivity extends AppCompatActivity {
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
 
+    private String str_file_name;
+    private String str_TokenId;
+    private String str_TotalPrice;
+    private String str_TotalLike;
+    private String str_creatorName;
+    private String str_ImageUrl;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
         switch (item.getItemId()) {
@@ -89,12 +98,12 @@ public class DetailItemActivity extends AppCompatActivity {
         tgl_transaksi = (TextView) findViewById(R.id.textViewLastBoughtDate);
 
         Intent intent = getIntent();
-        String str_file_name=intent.getStringExtra("image_title");
-        String str_TokenId=intent.getStringExtra("TokenId");
-        String str_TotalPrice=intent.getStringExtra("TotalPrice");
-        String str_TotalLike=intent.getStringExtra("TotalLike");
-        String str_creatorName=intent.getStringExtra("creator_name");
-        String str_ImageUrl = intent.getStringExtra("image_url");
+        str_file_name=intent.getStringExtra("image_title");
+        str_TokenId=intent.getStringExtra("TokenId");
+        str_TotalPrice=intent.getStringExtra("TotalPrice");
+        str_TotalLike=intent.getStringExtra("TotalLike");
+        str_creatorName=intent.getStringExtra("creator_name");
+        str_ImageUrl = intent.getStringExtra("image_url");
 
         actionBar.setTitle(str_file_name);//this is for actionbar
 
@@ -119,22 +128,13 @@ public class DetailItemActivity extends AppCompatActivity {
             }
         });
 
-        button_buy = (Button) findViewById(R.id.button_buy2);
-        button_buy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailItemActivity.this, PaymentActivity.class);
-                intent.putExtra("total_price",str_TotalPrice);
-                intent.putExtra("file_name",str_file_name);
-                intent.putExtra("Item_id",str_TokenId);
-                startActivity(intent);
-            }
-        });
-
         //below this call lists of cards
         getData();
     }
-
+    public static String getPreference(Context context, String key) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getString(key, "");
+    }
     void detailItem(String tokenId) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -147,11 +147,57 @@ public class DetailItemActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ItemCollection>> call, Response<ArrayList<ItemCollection>> response) {
                 if(response.isSuccessful()) {
+                    String owner="";
+                    String sell_status="";
                     ArrayList<ItemCollection> data = response.body();
-                    for (int i = 0 ; i<data.size();i++){
+                    for (int i = data.size()-1 ; i>=0;i--){
                         collection_name.setText(data.get(i).getCollectionName());
                         owner_name.setText(data.get(i).getOwnBy());
+                        System.out.println(data.get(i).getOwnBy());
+                        owner = data.get(i).getOwnBy();
                         tgl_transaksi.setText(data.get(i).getLast_activity());
+                        sell_status = data.get(i).getSell_status();
+                    }
+
+                    String user = getPreference(DetailItemActivity.this,"username");
+                    button_buy = (Button) findViewById(R.id.button_buy2);
+                    if(sell_status.equals("0")&& !user.equals(owner)){
+                        button_buy.setEnabled(false);
+                        button_buy.setText("Not For Sale");
+                        button_buy.setBackgroundResource(R.color.red);
+                    }else if(user.equals(owner) && sell_status.equals("0")){
+                        button_buy.setText("Open Sale");
+                        button_buy.setBackgroundResource(R.color.tea_green);
+                        button_buy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(DetailItemActivity.this, "Item Updated to 1", Toast.LENGTH_LONG).show();
+                                set_item_status(str_TokenId);
+                            }
+                        });
+                    }else if(user.equals(owner) && sell_status.equals("1")){
+                        button_buy.setText("Close Sale");
+                        button_buy.setBackgroundResource(R.color.tea_green);
+                        button_buy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(DetailItemActivity.this, "Item Updated to 0", Toast.LENGTH_LONG).show();
+                                set_item_status(str_TokenId);
+                            }
+                        });
+                    }else{
+                        button_buy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(DetailItemActivity.this, PaymentActivity.class);
+                                intent.putExtra("total_price",str_TotalPrice);
+                                intent.putExtra("file_name",str_file_name);
+                                intent.putExtra("Item_id",str_TokenId);
+                                String owner = owner_name.getText().toString();
+                                intent.putExtra("owned_by",owner);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                 }
@@ -159,6 +205,31 @@ public class DetailItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<ItemCollection>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    void set_item_status(String tokenId) {
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("CMD", "set_status_sell")
+                .addFormDataPart("id", tokenId)
+                .build();
+        Call call = apiList.status_sell(requestBody);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    String res = response.body().toString();
+                    if(res.equals("Update Successful")){
+                        detailItem(str_TokenId);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
 
             }
         });
