@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         Drawable dr = ContextCompat.getDrawable(MainActivity.this,R.drawable.daradi_logo2);
         Bitmap logo = ((BitmapDrawable) dr).getBitmap();
-        // Scale it to 50 x 50
+        // Scale it to 40 x 30
         Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(logo, 40, 30, true));
         actionBar.setHomeAsUpIndicator(d);// set drawable icon
         actionBar.setDisplayHomeAsUpEnabled(true);
