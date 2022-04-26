@@ -289,7 +289,7 @@ public class DetailItemActivity extends AppCompatActivity {
                             }
                         });
                     }
-                    checkStatusFav(tokenId, data.get(data.size()-1).getOwnBy(), data.get(data.size()-1).getCollectionName());
+
                 }
             }
 
@@ -348,7 +348,7 @@ public class DetailItemActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 if (response.isSuccessful()) {
-                    String res  = response.body().toString();
+                    String res = response.body().toString();
                     if(res.equals("Update Successful")){
                         detailItem(str_TokenId);
                     }
