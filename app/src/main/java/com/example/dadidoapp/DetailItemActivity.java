@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dadidoapp.Adapter.cardItem_adapter;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
@@ -56,6 +57,8 @@ public class DetailItemActivity extends AppCompatActivity {
     private Button button_buy;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //Showing Back Button
@@ -129,9 +132,40 @@ public class DetailItemActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (imgFav.isSelected()) {
                     imgFav.setSelected(false);
-                } else {
-                    imgFav.setSelected(true);
                     imgFav.likeAnimation();
+                } else {
+                    Intent intent1 = getIntent();
+                    ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("CMD", "insert_new_fav")
+                            .addFormDataPart("username_creator", owner_name.getText().toString().trim())
+                            .addFormDataPart("username_seeing", getPreference(DetailItemActivity.this, "username"))
+                            .addFormDataPart("id_item", str_TokenId)
+                            .addFormDataPart("collection_name", collection_name.getText().toString().trim())
+                            .build();
+                    Call call = apiList.favItem(requestBody);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            if (response.isSuccessful()) {
+                                String res = response.body().toString();
+                                if (res.equals("success")) {
+                                    imgFav.setSelected(true);
+                                    imgFav.likeAnimation();
+
+                                    Toast.makeText(DetailItemActivity.this, "Favorited", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(DetailItemActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+
+                        }
+                    });
                 }
             }
         });
@@ -219,5 +253,10 @@ public class DetailItemActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static String getPreference(Context context, String key) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getString(key, "");
     }
 }
