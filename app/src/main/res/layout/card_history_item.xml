@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textsale"
+            android:id="@+id/textSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -46,27 +46,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textnama2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="232dp"
-            android:fontFamily="@font/poppinsregular"
-            android:text="Leonardo Ade"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.081"
-            app:layout_constraintStart_toEndOf="@+id/textnama"
-            app:layout_constraintTop_toBottomOf="@+id/textpriced" />
-
-        <TextView
-            android:id="@+id/textto2"
+            android:id="@+id/textOwn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="232dp"
             android:fontFamily="@font/poppinsregular"
             android:text="Budi Ariyansa"
@@ -75,42 +59,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textto"
-            app:layout_constraintTop_toBottomOf="@+id/textnama2" />
+            app:layout_constraintTop_toBottomOf="@+id/textSale" />
 
         <TextView
-            android:id="@+id/textnama"
+            android:id="@+id/textDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppinsregular"
-            android:text="From  :"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textprice" />
-
-        <TextView
-            android:id="@+id/textprice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppinsregular"
-            android:text="Price  :"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textevent" />
-
-        <TextView
-            android:id="@+id/textdate2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/poppinsregular"
             android:text="7 Jan 2022"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -118,16 +74,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.051"
-            app:layout_constraintStart_toEndOf="@+id/textdate"
-            app:layout_constraintTop_toBottomOf="@+id/textto2" />
+            app:layout_constraintStart_toEndOf="@+id/textdate"/>
 
         <TextView
             android:id="@+id/textdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/poppinsregular"
             android:text="date/time  :"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -138,34 +93,18 @@
             app:layout_constraintTop_toBottomOf="@+id/textto" />
 
         <TextView
-            android:id="@+id/textpriced"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="220dp"
-            android:fontFamily="@font/poppinsregular"
-            android:text="0.7 Dadido Coin"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textprice"
-            app:layout_constraintTop_toBottomOf="@+id/textsale" />
-
-        <TextView
             android:id="@+id/textto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/poppinsregular"
-            android:text="To  :"
+            android:text="Owner  :"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textnama" />
+            app:layout_constraintTop_toBottomOf="@+id/textevent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

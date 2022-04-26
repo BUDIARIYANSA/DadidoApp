@@ -41,11 +41,9 @@ public class CardHistory_adapter extends RecyclerView.Adapter<CardHistory_adapte
     public void onBindViewHolder(@NonNull CardHistory_adapter.cardHistoryViewHolder holder, int position) {
         final Card_History_Model dataItem = dataList.get(position);
 
-        holder.textsale.setText(dataItem.getEvent_history());
-        holder.textpriced.setText(dataItem.getPrice_history());
-        holder.textnama2.setText(dataItem.getBayar_from());
-        holder.textto2.setText(dataItem.getSeller_history());
-        holder.textdate2.setText(dataItem.getDate_history());
+        holder.textSale.setText(dataItem.getEvent_history());
+        holder.textOwn.setText(dataItem.getOwner());
+        holder.textDate.setText(dataItem.getDate_history());
 
     }
 
@@ -55,16 +53,14 @@ public class CardHistory_adapter extends RecyclerView.Adapter<CardHistory_adapte
     }
 
     public class cardHistoryViewHolder extends RecyclerView.ViewHolder {
-        private TextView textsale, textpriced, textnama2, textto2, textdate2;
+        private TextView textSale, textOwn, textDate;
         private CardView card;
 
         public cardHistoryViewHolder(View HistoryView) {
             super(HistoryView);
-            textsale = (TextView) HistoryView.findViewById(R.id.textsale);
-            textpriced = (TextView) HistoryView.findViewById(R.id.textpriced);
-            textnama2 = (TextView) HistoryView.findViewById(R.id.textnama2);
-            textto2 = (TextView) HistoryView.findViewById(R.id.textto2);
-            textdate2 = (TextView) HistoryView.findViewById(R.id.textdate2);
+            textSale = (TextView) HistoryView.findViewById(R.id.textSale);
+            textOwn= (TextView) HistoryView.findViewById(R.id.textOwn);
+            textDate = (TextView) HistoryView.findViewById(R.id.textDate);
 
             card = (CardView) HistoryView.findViewById(R.id.card_model_history);
         }

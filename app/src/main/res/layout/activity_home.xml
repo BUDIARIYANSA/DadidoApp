@@ -27,7 +27,7 @@
 
                 <android.widget.Button
                     android:id="@+id/button_mostExpensive"
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -39,7 +39,7 @@
 
                 <android.widget.Button
                     android:id="@+id/button_New"
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -47,18 +47,6 @@
                     android:fontFamily="@font/poppinsregular"
                     android:padding="15dp"
                     android:text="New"
-                    android:textColor="@color/dark_green" />
-
-                <android.widget.Button
-                    android:id="@+id/button_Trending"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/button_capsule_shape"
-                    android:fontFamily="@font/poppinsregular"
-                    android:padding="15dp"
-                    android:text="Trending"
                     android:textColor="@color/dark_green" />
 
             </LinearLayout>

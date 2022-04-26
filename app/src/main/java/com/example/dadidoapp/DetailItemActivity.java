@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,12 +52,12 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView description;
     private TextView total_fav;
     private TextView total_favorite;
-    private TextView total_price;
     private TextView tokenid;
     private SmallBangView imgFav;
     private Button button_item_activity;
     private TextView tgl_transaksi;
     private Button button_buy;
+    private EditText T_price;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
     SharedPreferences sharedPreferences;
@@ -96,11 +97,11 @@ public class DetailItemActivity extends AppCompatActivity {
         imgview = (ImageView) findViewById(R.id.imageView2);
         collection_name = (TextView) findViewById(R.id.textViewCollectionName);
         file_name = (TextView) findViewById(R.id.textViewFileName);
-        total_price = (TextView) findViewById(R.id.textViewCurrPrice);
         tokenid = (TextView) findViewById(R.id.textViewTokenId);
         total_fav = (TextView) findViewById(R.id.textViewFavTotal);
         description = (TextView) findViewById(R.id.textViewDescription);
         owner_name = (TextView) findViewById(R.id.textViewOwner);
+        T_price = (EditText) findViewById(R.id.editTextPriceDecimal);
 
         imgFav = (SmallBangView) findViewById(R.id.imageViewAnimation);
         tgl_transaksi = (TextView) findViewById(R.id.textViewLastBoughtDate);
@@ -117,7 +118,7 @@ public class DetailItemActivity extends AppCompatActivity {
 
         tokenid.setText(str_TokenId);
         file_name.setText(str_file_name);
-        total_price.setText(str_TotalPrice);
+        T_price.setText(str_TotalPrice);
         total_fav.setText(str_TotalLike);
         description.setText(str_creatorName);
         Picasso.get().load(str_ImageUrl).into(imgview);
@@ -131,6 +132,7 @@ public class DetailItemActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(DetailItemActivity.this,HistoryItemActivity.class);
+                intent.putExtra("tokenId", str_TokenId);
                 startActivity(intent);
 
             }
@@ -240,42 +242,49 @@ public class DetailItemActivity extends AppCompatActivity {
                     String owner="";
                     String sell_status="";
                     ArrayList<ItemCollection> data = response.body();
-                    for (int i = data.size()-1 ; i>=0;i--){
+                    for (int i = 0 ; i<data.size() ; i++){
                         collection_name.setText(data.get(i).getCollectionName());
                         owner_name.setText(data.get(i).getOwnBy());
-                        System.out.println(data.get(i).getOwnBy());
                         owner = data.get(i).getOwnBy();
+                        System.out.println(owner);
                         tgl_transaksi.setText(data.get(i).getLast_activity());
                         sell_status = data.get(i).getSell_status();
                     }
-
+                    checkStatusFav(str_TokenId, data.get(data.size()-1).getOwnBy(), data.get(data.size()-1).getCollectionName());
                     String user = getPreference(DetailItemActivity.this,"username");
+                    T_price = (EditText) findViewById(R.id.editTextPriceDecimal);
                     button_buy = (Button) findViewById(R.id.button_buy2);
                     if(sell_status.equals("0")&& !user.equals(owner)){
                         button_buy.setEnabled(false);
                         button_buy.setText("Not For Sale");
                         button_buy.setBackgroundResource(R.color.red);
+                        T_price.setEnabled(false);
                     }else if(user.equals(owner) && sell_status.equals("0")){
                         button_buy.setText("Open Sale");
                         button_buy.setBackgroundResource(R.color.tea_green);
+                        T_price.setEnabled(true);
                         button_buy.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(DetailItemActivity.this, "Item Updated to 1", Toast.LENGTH_LONG).show();
-                                set_item_status(str_TokenId);
+                                Toast.makeText(DetailItemActivity.this, "Selling Item", Toast.LENGTH_LONG).show();
+                                str_TotalPrice = T_price.getText().toString().trim();
+                                set_item_status(str_TokenId, str_TotalPrice);
                             }
                         });
                     }else if(user.equals(owner) && sell_status.equals("1")){
                         button_buy.setText("Close Sale");
                         button_buy.setBackgroundResource(R.color.tea_green);
+                        T_price.setEnabled(false);
                         button_buy.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(DetailItemActivity.this, "Item Updated to 0", Toast.LENGTH_LONG).show();
-                                set_item_status(str_TokenId);
+                                Toast.makeText(DetailItemActivity.this, "Closing Sell Item", Toast.LENGTH_LONG).show();
+                                System.out.println(str_TotalPrice);
+                                set_item_status(str_TokenId,str_TotalPrice);
                             }
                         });
                     }else{
+                        T_price.setEnabled(false);
                         button_buy.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -337,11 +346,12 @@ public class DetailItemActivity extends AppCompatActivity {
         });
     }
 
-    void set_item_status(String tokenId) {
+    void set_item_status(String tokenId, String price) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("CMD", "set_status_sell")
                 .addFormDataPart("id", tokenId)
+                .addFormDataPart("price", price)
                 .build();
         Call call = apiList.status_sell(requestBody);
         call.enqueue(new Callback() {
@@ -351,13 +361,15 @@ public class DetailItemActivity extends AppCompatActivity {
                     String res = response.body().toString();
                     if(res.equals("Update Successful")){
                         detailItem(str_TokenId);
+                    }else {
+                        Toast.makeText(DetailItemActivity.this, res, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-
+                Toast.makeText(DetailItemActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
