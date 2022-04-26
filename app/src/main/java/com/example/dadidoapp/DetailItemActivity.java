@@ -35,6 +35,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import xyz.hanks.library.bang.SmallBangView;
 
 public class DetailItemActivity extends AppCompatActivity {
 
@@ -51,8 +52,10 @@ public class DetailItemActivity extends AppCompatActivity {
     private TextView total_favorite;
     private TextView total_price;
     private TextView tokenid;
+    private SmallBangView imgFav;
+    private Button button_item_activity;
     private TextView tgl_transaksi;
-    private Button button_item_activity, button_buy;
+    private Button button_buy;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
     private static final String PREFS_NAME = "LoginPrefs";
 
@@ -95,6 +98,8 @@ public class DetailItemActivity extends AppCompatActivity {
         total_fav = (TextView) findViewById(R.id.textViewFavTotal);
         description = (TextView) findViewById(R.id.textViewDescription);
         owner_name = (TextView) findViewById(R.id.textViewOwner);
+
+        imgFav = (SmallBangView) findViewById(R.id.imageViewAnimation);
         tgl_transaksi = (TextView) findViewById(R.id.textViewLastBoughtDate);
 
         Intent intent = getIntent();
@@ -125,6 +130,30 @@ public class DetailItemActivity extends AppCompatActivity {
                 Intent intent = new Intent(DetailItemActivity.this,HistoryItemActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        imgFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (imgFav.isSelected()) {
+                    imgFav.setSelected(false);
+                } else {
+                    imgFav.setSelected(true);
+                    imgFav.likeAnimation();
+                }
+            }
+        });
+
+        button_buy = (Button) findViewById(R.id.button_buy2);
+        button_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailItemActivity.this, PaymentActivity.class);
+                intent.putExtra("total_price",str_TotalPrice);
+                intent.putExtra("file_name",str_file_name);
+                intent.putExtra("Item_id",str_TokenId);
+                startActivity(intent);
             }
         });
 

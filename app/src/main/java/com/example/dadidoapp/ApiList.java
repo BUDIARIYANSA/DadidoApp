@@ -62,4 +62,7 @@ public interface ApiList {
     @POST("webservice.php")
     Call<Object> status_sell(@Body RequestBody body);
 
+    @POST("webservice.php")
+    Call<Object> favItem(@Body RequestBody body);
+
 }
