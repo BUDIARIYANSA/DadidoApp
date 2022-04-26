@@ -16,11 +16,15 @@ public class ItemCollection {
     @SerializedName("event")
     private String event;
 
-    public ItemCollection(String collectionName, String ownBy, String last_activity, String event) {
+    @SerializedName("sell_status")
+    private String sell_status;
+
+    public ItemCollection(String collectionName, String ownBy, String last_activity, String event, String sell_status) {
         this.collectionName = collectionName;
         this.ownBy = ownBy;
         this.last_activity = last_activity;
         this.event = event;
+        this.sell_status = sell_status;
     }
 
     public String getCollectionName() {
@@ -39,6 +43,10 @@ public class ItemCollection {
         return event;
     }
 
+    public String getSell_status() {
+        return sell_status;
+    }
+
     public void setCollectionName(String collectionName) {
         this.collectionName = collectionName;
     }
@@ -53,5 +61,9 @@ public class ItemCollection {
 
     public void setEvent(String event) {
         this.event = event;
+    }
+
+    public void setSell_status(String sell_status) {
+        this.sell_status = sell_status;
     }
 }
