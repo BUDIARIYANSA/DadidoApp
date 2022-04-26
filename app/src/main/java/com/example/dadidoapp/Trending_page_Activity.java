@@ -41,15 +41,6 @@ public class Trending_page_Activity extends Fragment {
         TrendingList(view);
     }
 
-    void addData(){
-        Card_Item_ArrayList2 = new ArrayList<>();
-        Card_Item_ArrayList2.add(new Card_Item_Model2( "1","Gambar satu", "#1","dece441","10","/Image/kresm10/goldman.png"));
-        Card_Item_ArrayList2.add(new Card_Item_Model2("2","Gambar dua", "#2","dece441","10","/Image/ardo123/coolman.png"));
-        Card_Item_ArrayList2.add(new Card_Item_Model2("3","Gambar tiga", "#3","dece441","10","/Image/dece441/beach.jpg"));
-        Card_Item_ArrayList2.add(new Card_Item_Model2("4","Gambar empat", "#4","dece441","10","/Image/kresm10/go-explore-949112.jpg"));
-        Card_Item_ArrayList2.add(new Card_Item_Model2("5","Gambar lima", "#5","dece441","10","/Image/dece441/fireman.jpg"));
-    }
-
     public void TrendingList(View view) {
         ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
         RequestBody requestBody = new MultipartBody.Builder()
