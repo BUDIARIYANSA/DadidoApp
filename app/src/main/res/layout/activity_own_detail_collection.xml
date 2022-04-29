@@ -18,18 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textViewCollectionNameDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Collection_Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintStart_toEndOf="@+id/imageViewProfileCreator2"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewCBanner" />
-
             <ImageView
                 android:id="@+id/imageViewCBanner"
                 android:layout_width="0dp"
@@ -69,6 +57,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             <Button
+                android:id="@+id/buttonToUpdateCollection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Update Collection"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDescCollection" />
+
+            <Button
                 android:id="@+id/button_change_banner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,33 +80,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="25dp"
-                android:fontFamily="@font/poppinsregular"
-                android:text="Descriptions"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewProfileCreator2" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="25dp"
                 app:cardBackgroundColor="@color/dark_green"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8">
+                app:layout_constraintTop_toBottomOf="@+id/buttonToUpdateCollection">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -232,7 +217,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/leaf_green"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCollectionNameDetail" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTitleCollection" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -243,7 +228,39 @@
                 android:text="By : "
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfileCreator2"
-                app:layout_constraintTop_toTopOf="@+id/textViewCreatorNameDetail" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTitleCollection" />
+
+            <EditText
+                android:id="@+id/editTextDescCollection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:fontFamily="@font/poppinsregular"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewProfileCreator2" />
+
+            <EditText
+                android:id="@+id/editTextTitleCollection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:fontFamily="@font/poppinsregular"
+                android:hint="Collection Title"
+                android:inputType="textMultiLine"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewProfileCreator2"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCBanner" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

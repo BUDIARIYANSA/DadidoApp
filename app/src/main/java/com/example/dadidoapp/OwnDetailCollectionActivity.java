@@ -3,10 +3,14 @@ package com.example.dadidoapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +31,10 @@ import com.example.dadidoapp.Model.Creator;
 import com.example.dadidoapp.Model.Item;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -42,13 +48,19 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
     private ArrayList<Card_Item_Model> Card_Item_ArrayList;
     private ImageView imgbanner;
     private ImageView imgProfil;
-    private TextView collection_name;
+    private EditText collection_name;
     private TextView creator_name;
     private TextView total_follower;
     private TextView cheapest;
-    private TextView description;
+    private EditText description;
     private TextView total_item;
     private Button buttonToCreateItem;
+    private Button buttonToUpdate;
+    private Button btnChangeBanner;
+    private int button_clicked = 0;
+
+    private String path;
+    int SELECT_PICTURE = 200;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -95,6 +107,77 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
         dataCollection();
         getCard();
 
+        buttonToUpdate = (Button) findViewById(R.id.buttonToUpdateCollection);
+        buttonToUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(description.getText().toString().length() == 0 && description.getText().toString().isEmpty() &&
+                        collection_name.getText().toString().length() == 0 && collection_name.getText().toString().isEmpty()){
+                    Toast.makeText(OwnDetailCollectionActivity.this, "Fill the description and the collection title", Toast.LENGTH_SHORT).show();
+                }else if(description.getText().toString().length() >= 0 && !description.getText().toString().isEmpty() &&
+                        collection_name.getText().toString().length() == 0 && collection_name.getText().toString().isEmpty()){
+                    Toast.makeText(OwnDetailCollectionActivity.this, "Fill the Collection Title", Toast.LENGTH_SHORT).show();
+                }else if(description.getText().toString().length() == 0 && description.getText().toString().isEmpty() &&
+                        collection_name.getText().toString().length() >= 0 && !collection_name.getText().toString().isEmpty()){
+                    Toast.makeText(OwnDetailCollectionActivity.this, "Fill the description", Toast.LENGTH_SHORT).show();
+                }else{
+                    update_collection();
+                }
+            }
+        });
+
+        btnChangeBanner = (Button) findViewById(R.id.button_change_banner);
+        btnChangeBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageChooser();
+                button_clicked = 1;
+            }
+        });
+
+    }
+
+    private void imageChooser() {
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        startActivityForResult(Intent.createChooser(pickIntent, "Select Picture"), SELECT_PICTURE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == SELECT_PICTURE) {
+
+                Uri selectImageUri = data.getData();
+                if (null != selectImageUri) {
+
+                    imgbanner.setImageURI(selectImageUri);
+                    path = getRealPathFromURI(selectImageUri,OwnDetailCollectionActivity.this);
+                    Toast.makeText(OwnDetailCollectionActivity.this, path, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    public String getRealPathFromURI(Uri contentUri, Context context) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+            //Log.e("EditActivity", "getRealPathFromURI Exception : " + e.toString());
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     public static boolean setPreference(Context context, String key, String value) {
@@ -124,8 +207,8 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ArrayList<Creator> data = response.body();
                     creator_name = (TextView) findViewById(R.id.textViewCreatorNameDetail);
-                    collection_name = (TextView) findViewById(R.id.textViewCollectionNameDetail);
-                    description = (TextView) findViewById(R.id.textView8);
+                    collection_name = (EditText) findViewById(R.id.editTextTitleCollection);
+                    description = (EditText) findViewById(R.id.editTextDescCollection);
                     imgbanner = (ImageView) findViewById(R.id.imageViewCBanner);
                     imgProfil = (ImageView) findViewById(R.id.imageViewProfileCreator2);
 
@@ -149,6 +232,81 @@ public class OwnDetailCollectionActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void update_collection(){
+        ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
+        String str_username = getPreference(OwnDetailCollectionActivity.this, "username");
+
+        String collection_title = collection_name.getText().toString().trim();
+        String collection_desc = description.getText().toString().trim();
+
+        if(button_clicked == 1) {
+            File file = new File(path);
+            RequestBody requestf = RequestBody.create(MediaType.parse("image/*"), file);
+
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("CMD", "update_collection")
+                    .addFormDataPart("username", str_username)
+                    .addFormDataPart("collection_name", collection_title)
+                    .addFormDataPart("collection_desc", collection_desc)
+                    .addFormDataPart("choosefile", file.getName(), requestf)
+                    .build();
+            Call call = apiList.createItem(requestBody);
+            call.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if (response.isSuccessful()) {
+                        String res = response.body().toString();
+                        if (res.equals("success update Picture and collection")) {
+                            Toast.makeText(OwnDetailCollectionActivity.this, res, Toast.LENGTH_SHORT).show();
+                            button_clicked = 0;
+                            Intent intent = new Intent(OwnDetailCollectionActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(OwnDetailCollectionActivity.this, res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, Throwable t) {
+
+                }
+            });
+        }else if(button_clicked == 0){
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("CMD", "update_collection")
+                    .addFormDataPart("username", str_username)
+                    .addFormDataPart("collection_name", collection_title)
+                    .addFormDataPart("collection_desc", collection_desc)
+                    .build();
+            Call call = apiList.createItem(requestBody);
+            call.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) {
+                    if (response.isSuccessful()) {
+                        String res = response.body().toString();
+                        if (res.equals("success update collection")) {
+                            Toast.makeText(OwnDetailCollectionActivity.this, res, Toast.LENGTH_SHORT).show();
+                            button_clicked = 0;
+                            Intent intent = new Intent(OwnDetailCollectionActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(OwnDetailCollectionActivity.this, res, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, Throwable t) {
+                    Toast.makeText(OwnDetailCollectionActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     public void Cheapest_item() {
