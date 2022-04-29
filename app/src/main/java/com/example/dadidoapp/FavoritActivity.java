@@ -24,7 +24,9 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.dadidoapp.Adapter.CardEmpty_adapter;
 import com.example.dadidoapp.Adapter.CardFavorite_adapter;
+import com.example.dadidoapp.LayoutModel.Card_Empty_Model;
 import com.example.dadidoapp.LayoutModel.Card_Favorite_Model;
 import com.example.dadidoapp.LayoutModel.Card_Item_Model;
 import com.example.dadidoapp.Model.Item;
@@ -46,8 +48,10 @@ public class FavoritActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
     private CardFavorite_adapter adapter;
+    private CardEmpty_adapter Emp_adapter;
     FloatingActionButton mCollection;
     private ArrayList<Card_Favorite_Model> Card_Favorite_ArrayList;
+    private ArrayList<Card_Empty_Model> Card_Empty_ArrayList;
     private SmallBangView imageFav;
     private ApiList apiList = RetrofitClient.getRetrofitClient().create(ApiList.class);
 
@@ -177,20 +181,33 @@ public class FavoritActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
                 if (response.isSuccessful()){
-                    Card_Favorite_ArrayList = new ArrayList<>();
                     ArrayList<Item> data = response.body();
-                    for (int i = 0; i < data.size(); i++) {
-                        Card_Favorite_ArrayList.add(new Card_Favorite_Model(data.get(i).getFileName(), data.get(i).getDescription(), data.get(i).getUrl()));
+                    if( data != null && !data.isEmpty()) {
+                        Card_Favorite_ArrayList = new ArrayList<>();
+                        for (int i = 0; i < data.size(); i++) {
+                            Card_Favorite_ArrayList.add(new Card_Favorite_Model(data.get(i).getFileName(), data.get(i).getDescription(), data.get(i).getUrl()));
+                        }
+                        recyclerView = (RecyclerView) findViewById(R.id.recycler_favorite);
+
+                        adapter = new CardFavorite_adapter(Card_Favorite_ArrayList, FavoritActivity.this);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FavoritActivity.this, LinearLayoutManager.VERTICAL, false);
+                        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        recyclerView.setAdapter(adapter);
+                    }else{
+                        Card_Empty_ArrayList = new ArrayList<>();
+                        Card_Empty_ArrayList.add(new Card_Empty_Model("Your Favorite is Empty"));
+
+                        recyclerView = (RecyclerView) findViewById(R.id.recycler_favorite);
+
+                        Emp_adapter = new CardEmpty_adapter(Card_Empty_ArrayList, FavoritActivity.this);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FavoritActivity.this, LinearLayoutManager.VERTICAL, false);
+                        //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        recyclerView.setAdapter(Emp_adapter);
                     }
-
-                    recyclerView = (RecyclerView) findViewById(R.id.recycler_favorite);
-
-                    adapter = new CardFavorite_adapter(Card_Favorite_ArrayList,FavoritActivity.this);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FavoritActivity.this, LinearLayoutManager.VERTICAL,false);
-                    //GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailItemActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-                    recyclerView.setLayoutManager(layoutManager);
-
-                    recyclerView.setAdapter(adapter);
                 } else {
                     Toast.makeText(FavoritActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
